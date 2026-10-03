@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Work & Pomodoro Pro Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-color: #1a202c;
+            --primary: #3182ce;
+            --primary-hover: #2b6cb0;
+            --success: #38a169;
+            --warning: #dd6b20;
+            --danger: #e53e3e;
+            --border: #cbd5e0;
+            --purple: #805ad5;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container { max-width: 1300px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 25px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 1100px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+        
+        .full-width { grid-column: 1 / -1; }
+        
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        h2 { margin-top: 0; font-size: 1.2rem; border-bottom: 2px solid var(--bg-color); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        h3 { font-size: 0.95rem; margin-top: 0; text-align: center; }
+        
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem; }
+        input, select, textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        
+        .flex-inputs { display: flex; gap: 10px; }
+        .flex-inputs input, .flex-inputs select { flex: 1; }
+
+        button { background-color: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; transition: background 0.2s; }
+        button:hover { background-color: var(--primary-hover); }
+        .btn-secondary { background-color: #4a5568; }
+        .btn-secondary:hover { background-color: #2d3748; }
+        .btn-danger { background-color: var(--danger); }
+        
+        /* Pomodoro States Styling */
+        .pomodoro-box { text-align: center; padding: 15px; background: #edf2f7; border-radius: 8px; transition: all 0.3s ease; }
+        .pomo-state-work { background: #ebf8ff; border: 2px solid var(--primary); }
+        .pomo-state-prompt { background: #feebc8; border: 2px solid var(--warning); animation: pulse-yellow 1s infinite alternate; }
+        .pomo-state-overtime { background: #fed7d7; border: 2px solid var(--danger); }
+        .pomo-state-break { background: #e6fffa; border: 2px solid var(--success); }
+
+        @keyframes pulse-yellow { from { background: #feebc8; } to { background: #fbd38d; } }
+
+        .timer-display { font-size: 3rem; font-weight: bold; font-family: monospace; margin: 10px 0; }
+        .macro-progress { font-size: 0.85rem; color: #4a5568; margin-bottom: 10px; font-weight: bold; }
+        .prompt-banner { font-size: 0.95rem; font-weight: bold; color: #c05621; margin-bottom: 8px; }
+
+        /* Calendar Styling */
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+        .calendar-day-name { font-weight: bold; font-size: 0.75rem; color: #718096; padding: 5px 0; }
+        .calendar-cell { background: #f7fafc; border: 1px solid #e2e8f0; min-height: 45px; border-radius: 4px; display: flex; flex-direction: column; justify-content: space-between; padding: 4px; font-size: 0.8rem; }
+        .calendar-cell.has-work { background: #ebf8ff; border-color: #bee3f8; }
+        .calendar-work-hours { font-weight: bold; color: var(--primary); font-size: 0.7rem; background: #ebf8ff; border-radius: 3px; }
+
+        /* Tables & Charts */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; }
+        th { background-color: #f7fafc; }
+        .chart-container { position: relative; height: 200px; width: 100%; }
+        .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; text-shadow: 0 1px 1px rgba(0,0,0,0.15); }
+        .badge-work { background: #e2e8f0; color: #1a202c; }
+
+        .color-manager { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px; max-height: 300; overflow-y: auto; }
+        .category-color-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; }
+	.btn-del-cat {
+    background: none !important;
+    border: none !important;
+    padding: 0 4px !important;
+    width: auto !important;
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+	.btn-del-cat:hover {
+    opacity: 1;
+}
+        .color-picker-circle { width: 24px; height: 24px; border-radius: 50%; overflow: hidden; border: 1px solid var(--border); position: relative; cursor: pointer; }
+        .color-picker-circle input[type="color"] { position: absolute; top: -5px; left: -5px; width: 34px; height: 34px; border: none; cursor: pointer; }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; z-index: 2000; visibility: hidden; opacity: 0; transition: all 0.2s; }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
+        .modal { background: var(--card-bg); padding: 20px; border-radius: 10px; width: 480px; max-width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .segment-row { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 8px; margin-bottom: 8px; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+
+        /* Audio Controls Widget */
+        .audio-widget { margin-top: 15px; border-top: 1px solid var(--border); padding-top: 12px; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>⏱️ Ultimate Local Work & Pomodoro Dashboard</h1>
+    </header>
+
+    <div class="grid">
+        <!-- 1. ADVANCED POMODORO ENGINE -->
+        <div class="card">
+            <h2>🍅 Pomodoro<span id="pomoStateLabel" style="font-size:0.85rem; color:var(--purple)">Neaktivní</span></h2>
+            <div id="pomoBoxContainer" class="pomodoro-box">
+                <div class="form-group" style="text-align:left;">
+                    <label for="pomoConfigSelect">Režim měření:</label>
+                    <select id="pomoConfigSelect" onchange="changePomoConfig()">
+                        <option value="25-5">Klasické Pomodoro (25 min / pauza 1:5)</option>
+                        <option value="50-10">Intenzivní Pomodoro (50 min / pauza 1:5)</option>
+                        <option value="flexible">Flexibilní stopky (Měří práci -> pauza 1:5)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="text-align:left;">
+                    <label for="pomoProjectSelect">Projekt:</label>
+                    <select id="pomoProjectSelect"></select>
+                </div>
+                <div class="form-group" style="text-align:left;">
+                    <label for="pomoTaskInput">Úkol:</label>
+                    <input type="text" id="pomoTaskInput" placeholder="Popis práce...">
+                </div>
+                
+                <div id="pomoPromptBanner" class="prompt-banner" style="display:none;"></div>
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                <div class="macro-progress" id="macroProgressDisplay">Akumulovaná práce do makro pauzy: 0 / 120 min</div>
+                
+<div class="flex-inputs">
+    <button id="pomoMainBtn" onclick="handlePomoMainAction()">Start</button>
+    <button class="btn-danger" id="pomoEndBtn" onclick="endAndSavePomodoro()">Uložit</button>
+    <button class="btn-secondary" id="pomoResetBtn" onclick="resetPomodoro()">Reset</button>
+</div>
+<!-- VLOŽ TENTO NOVÝ BLOK TĚSNĚ POD TO: -->
+<div style="margin-top: 10px;">
+    <button class="btn-secondary" style="background-color: #4a5568; font-size: 0.85rem; padding: 6px 12px;" onclick="endWholeSession()">
+        Ukončit celou session
+    </button>
+</div>
+<!-- AUDIO & HUDEBNÍ PŘEHRÁVAČ -->
+<div class="audio-widget" style="margin-top: 15px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+    
+    <!-- Výběr šumu -->
+    <label for="noiseSelect" style="display:block; font-weight: bold; font-size: 0.85rem; margin-bottom: 4px;">🎧 Ambientní šum na pozadí:</label>
+    <select id="noiseSelect" onchange="handleNoiseChange()" style="width: 100%; padding: 6px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+        <option value="none">Vypnuto</option>
+        <option value="white">Bílý šum (Soustředění)</option>
+        <option value="brown">Hnědý šum (Hluboký klid)</option>
+    </select>
+    
+<!-- Posuvník hlasitosti (0 až 100 % přes celou šířku) -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+    <span style="font-size: 0.8rem; color: #475569;">🔊 Hlasitost šumu:</span>
+    <span id="noiseVolPercent" style="font-size: 0.8rem; font-weight: bold; color: #2563eb;">0 %</span>
+</div>
+<input type="range" 
+       id="noiseVolume" 
+       min="0" 
+       max="1" 
+       step="0.01" 
+       value="0" 
+       style="width: 100%; display: block; margin: 0; padding: 0; cursor: pointer; accent-color: #2563eb;" 
+       oninput="updateNoiseVolume(this.value)"
+       onchange="updateNoiseVolume(this.value)">
+
+    <!-- Hudební přehrávač -->
+<label for="spotifyUrlInput" style="display:block; font-weight: bold; font-size: 0.85rem; margin-bottom: 4px;">🎵 Tvůj hudební přehrávač (YouTube / Spotify):</label>
+<input type="text" 
+       id="spotifyUrlInput" 
+       value="https://open.spotify.com/playlist/36kAGzrdyEpF19t91zEUJN" 
+       placeholder="Vlož odkaz z YouTube nebo Spotify..." 
+       oninput="updateMediaEmbed(this.value)" 
+       onchange="updateMediaEmbed(this.value)" 
+       style="width: 100%; padding: 6px; box-sizing: border-box; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+
+    <div id="spotifyContainer">
+        <iframe id="spotifyIframe" 
+                src="about:blank" 
+                width="100%" 
+                height="180" 
+                frameBorder="0" 
+                allow="autoplay; encrypted-media; picture-in-picture" 
+                referrerpolicy="strict-origin-when-cross-origin"
+                style="border-radius: 8px; background: #000; width: 100%;">
+        </iframe>
+    </div>
+</div>
+</div>
+</div>
+
+        <!-- 2. ZÁPIS PRÁCE -->
+        <div class="card">
+            <h2>✍️ Ruční zápis práce</h2>
+            <form id="workForm" onsubmit="logWorkManual(event)">
+                <div class="form-group">
+                    <label for="workProjectSelect">Projekt:</label>
+                    <select id="workProjectSelect" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="workTimeInput">Čas trvání:</label>
+                    <div class="flex-inputs">
+                        <input type="number" id="workTimeInput" min="1" required placeholder="Délka">
+                        <select id="workUnitSelect">
+                            <option value="m">Minut</option>
+                            <option value="h">Hodin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="workTaskInput">Co se dělalo (úkol):</label>
+                    <input type="text" id="workTaskInput" required placeholder="Např. Rešerše, psaní...">
+                </div>
+                <div class="form-group">
+                    <label for="workTimestampInput">Kdy to skončilo:</label>
+                    <input type="datetime-local" id="workTimestampInput" required>
+                </div>
+                <button type="submit">Uložit práci</button>
+            </form>
+        </div>
+
+        <!-- 3. KATEGORIZOVANÉ PAUZY -->
+        <div class="card">
+            <h2>☕ Ruční zápis pauzy</h2>
+            <form id="breakForm" onsubmit="logBreakManual(event)">
+                <div class="form-group">
+                    <label for="breakCategorySelect">Typ pauzy:</label>
+                    <select id="breakCategorySelect"></select>
+                </div>
+                <div class="form-group">
+                    <label for="breakDurationInput">Délka pauzy (v minutách):</label>
+                    <input type="number" id="breakDurationInput" min="1" required placeholder="Např. 15">
+                </div>
+                <div class="form-group">
+                    <label for="breakNoteInput">Detaily / Poznámka:</label>
+                    <input type="text" id="breakNoteInput" placeholder="Nepovinné upřesnění...">
+                </div>
+                <button type="submit" class="btn-secondary">Uložit pauzu</button>
+            </form>
+            
+            <div class="flex-inputs" style="margin-top: 12px;">
+                <input type="text" id="newBreakCategoryName" placeholder="Nová kategorie pauzy...">
+                <button style="width:auto; font-size:0.85rem;" class="btn-secondary" onclick="addNewBreakCategory()">+ Přidat</button>
+            </div>
+            <div id="colorManagerContainer" class="color-manager"></div>
+        </div>
+
+        <!-- 4. KALENDÁŘ -->
+        <div class="card">
+            <h2>📅 Kalendář práce</h2>
+            <div class="calendar-header">
+                <button style="width:auto; padding:2px 8px;" class="btn-secondary" onclick="moveMonth(-1)">&lt;</button>
+                <span id="calendarMonthLabel" style="font-weight:bold;">Měsíc RRRR</span>
+                <button style="width:auto; padding:2px 8px;" class="btn-secondary" onclick="moveMonth(1)">&gt;</button>
+            </div>
+            <div id="calendarGrid" class="calendar-grid"></div>
+        </div>
+
+        <!-- 5. DNEŠNÍ STATISTIKY S PROGRESS BAREM -->
+        <div class="card">
+            <h2>📊 Dnešní bilance</h2>
+            <p>Dnes čistá práce: <strong id="statsTodayWork">0h 0m</strong></p>
+            <p>Zapsané pauzy: <strong id="statsTodayExplicitBreaks">0 min</strong></p>
+            <p style="color:var(--purple)">Automatická pauza (čas mimo práci): <strong id="statsTodayAutoBreaks">0 min</strong></p>
+            <hr style="border:none; border-top:1px solid var(--border)">
+            <div class="form-group">
+                <label for="dailyGoalInput">Denní minimum (hodiny):</label>
+                <input type="number" id="dailyGoalInput" min="0.5" step="0.5" value="2" onchange="updateGoal()">
+            </div>
+            
+            <div style="background: #e2e8f0; border-radius: 8px; height: 22px; width: 100%; overflow: hidden; margin-top: 15px; position: relative; box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);">
+                <div id="goalProgressBar" style="height: 100%; width: 0%; background-color: var(--primary); transition: width 0.4s ease-in-out, background-color 0.4s ease-in-out; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                    0%
+                </div>
+            </div>
+            <p id="goalStatusText" style="font-weight:bold; font-size:0.9rem; margin-top: 10px;"></p>
+        </div>
+
+        <!-- 6. SPRÁVA PROJEKTŮ -->
+        <div class="card">
+            <h2>📁 Celkový čas na projektech</h2>
+            <div style="max-height: 120px; overflow-y: auto; margin-bottom:10px;">
+                <table id="projectSummaryTable">
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="flex-inputs">
+                <input type="text" id="newProjectName" placeholder="Nový projekt...">
+                <button style="width:auto;" onclick="addNewProject()">+ Přidat</button>
+            </div>
+        </div>
+
+        <!-- GRAFY -->
+        <div class="card full-width">
+            <h2>📈 Grafické přehledy</h2>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+                <div><h3>Aktivita během dne</h3><div class="chart-container"><canvas id="chartDayTime"></canvas></div></div>
+                <div><h3>Struktura přestávek</h3><div class="chart-container"><canvas id="chartBreaksType"></canvas></div></div>
+                <div><h3>Rozložení projektů</h3><div class="chart-container"><canvas id="chartProjPie"></canvas></div></div>
+            </div>
+        </div>
+
+        <!-- HISTORIE -->
+        <div class="card full-width">
+            <h2>📜 Kompletní časová osa (Záznamy s intervaly Od - Do)</h2>
+            <div style="overflow-x: auto; max-height: 350px;">
+                <table>
+                    <thead>
+                        <tr><th>Interval (Od - Do)</th><th>Typ</th><th>Projekt / Kategorie</th><th>Co se dělalo / Poznámka</th><th>Trvání</th><th>Akce</th></tr>
+                    </thead>
+                    <tbody id="masterHistoryTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODÁLNÍ OKNO PRO ROZDĚLENÍ PAUZY -->
+<div id="splitModalOverlay" class="modal-overlay">
+    <div class="modal">
+        <h2>Rozdělit automatický volný čas</h2>
+        <p style="color: #4a5568; font-size: 0.85rem; margin-bottom: 15px;">
+            Zadej časové úseky v zadaném okně. Neobsazený čas zůstane automatickou pauzou.
+        </p>
+        <form id="splitForm" onsubmit="handleSplitFormSubmit(event)">
+            <div id="modalSegmentsContainer"></div>
+            <button type="button" class="btn-secondary" onclick="addModalSegmentRow('', '')" style="margin-top: 10px; font-size:0.85rem; padding:6px;">+ Přidat úsek</button>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeModal()" style="width:auto;">Zrušit</button>
+                <button type="submit" style="width:auto;">Uložit úseky</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // --- DATOVÉ STRUKTURY ---
+    let data = JSON.parse(localStorage.getItem('ultimateTimeTrackerData_v4')) || {
+        projects: ['Diplomová práce', 'Ostatní'],
+        logs: [],       
+        breaks: [],     
+        dailyGoal: 2,
+        macroAccumulated: 0,
+        spotifyUrl: "https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn?utm_source=generator"
+    };
+
+    if (!data.breakCategories) {
+        data.breakCategories = {
+            'Jídlo': { name: 'Jídlo 🍔', color: '#fbbf24' },
+            'Procházka': { name: 'Procházka 🌲', color: '#34d399' },
+            'Čas na mobilu': { name: 'Čas na mobilu 📱', color: '#60a5fa' },
+            'Spánek': { name: 'Spánek 💤', color: '#8b5cf6' },
+            'Jiné': { name: 'Jiné ☕', color: '#ec4899' },
+            'auto': { name: 'Automatická pauza ⏳', color: '#9ca3af' }
+        };
+    }
+const checkTodayStr = getLocalDateString();
+if (!data.lastActiveDate) {
+    data.lastActiveDate = checkTodayStr;
+} else if (data.lastActiveDate !== checkTodayStr) {
+    // Detekován nový den! Vynulujeme postup do makro pauzy, ať začínáš s čistým štítem
+    data.macroAccumulated = 0;
+    data.lastActiveDate = checkTodayStr;
+    // Zde případně proběhne automatické uložení nového stavu níže
+}
+
+    let currentCalendarDate = new Date();
+    let chartD, chartB, chartP;
+
+    // --- POKROČILÝ POMODORO ENGINE STAVY ---
+    // Stavy: 'stopped', 'work', 'work_prompt', 'work_overtime', 'break', 'break_prompt', 'break_overtime'
+    let pomoState = 'stopped'; 
+    let pomoTimerSeconds = 0;       // Hlavní měřič (může jít do záporu pro overtime)
+    let pomoPromptSeconds = 0;      // Odpočet pro potvrzovací okna (10s / 5s)
+    let actualWorkSeconds = 0;      // Skutečně odpracované vteřiny v aktuálním bloku
+    let actualBreakSeconds = 0;     // Skutečně proprolené vteřiny v aktuálním bloku
+    let pomoInterval = null;
+    let isMacroBreak = false; // Hlídá, zda neběží velká 1h pauza
+
+    // --- WEB AUDIO NOISE GENERATOR VARIABLES ---
+    let noiseAudioCtx = null;
+    let noiseSource = null;
+    let noiseGainNode = null;
+
+function saveData() {
+    data.lastActiveDate = getLocalDateString(); // Aktualizace dne poslední aktivity
+    localStorage.setItem('ultimateTimeTrackerData_v4', JSON.stringify(data));
+    renderAll();
+}
+function updateNoiseVolume(val) {
+    const volume = parseFloat(val) || 0;
+    const percent = Math.round(volume * 100);
+
+    // 1. Změna textu procent v HTML
+    const percentEl = document.getElementById('noiseVolPercent');
+    if (percentEl) {
+        percentEl.textContent = percent + ' %';
+    }
+
+    // 2. Úprava reálné hlasitosti zvuku
+    try {
+        if (window.noiseGainNode && window.noiseGainNode.gain) {
+            window.noiseGainNode.gain.value = volume;
+        }
+        if (window.noiseAudio) {
+            window.noiseAudio.volume = volume;
+        }
+    } catch (err) {
+        // Ignorujeme, pokud audio ještě nebylo spuštěno
+    }
+}
+function updateMediaEmbed(rawUrl) {
+if (!rawUrl) return;
+
+    // 💡 AKTUALIZACE A ULOŽENÍ NOVÉHO ODKAZU DO DATA:
+    if (typeof data !== 'undefined' && data.spotifyUrl !== rawUrl) {
+        data.spotifyUrl = rawUrl.trim();
+        localStorage.setItem('ultimateTimeTrackerData_v4', JSON.stringify(data));
+    }
+
+    const iframe = document.getElementById('spotifyIframe');
+    if (!iframe) return;
+
+    if (!rawUrl || !rawUrl.trim()) {
+        iframe.src = "about:blank";
+        return;
+    }
+
+    const url = rawUrl.trim();
+
+    // 1. YouTube
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        iframe.style.height = "180px";
+        
+        // Získání ID videa
+        let videoId = "";
+        const vMatch = url.match(/(?:v=|\/watch\?v=|\/v\/|youtu\.be\/|\/embed\/)([^&?#/]+)/);
+        if (vMatch && vMatch[1]) {
+            videoId = vMatch[1];
+        }
+
+        // Získání ID playlistu
+        let listId = "";
+        const lMatch = url.match(/[?&]list=([^&]+)/);
+        if (lMatch && lMatch[1]) {
+            listId = lMatch[1];
+        }
+
+        // Kontrola: YouTube Mix / Rádio (začíná na RD) způsobuje Chybu 153, musíme ho ignorovat
+        const isRadioMix = listId.startsWith('RD') || listId.startsWith('RDMM');
+
+        if (videoId) {
+            let embedSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            // Playlist přikoupíme pouze v případě, že jde o reálný uživatelský playlist (PL...), ne o Mix (RD...)
+            if (listId && !isRadioMix) {
+                embedSrc += `&list=${listId}`;
+            }
+            iframe.src = embedSrc;
+        } else if (listId && !isRadioMix) {
+            iframe.src = `https://www.youtube.com/embed/videoseries?list=${listId}`;
+        }
+    } 
+    // 2. Spotify
+    else if (url.includes('spotify.com')) {
+        iframe.style.height = "80px";
+        if (url.includes('/embed/')) {
+            iframe.src = url;
+        } else {
+            iframe.src = url.replace('open.spotify.com/', 'open.spotify.com/embed/');
+        }
+    }
+}
+function saveCurrentPomoCycle() {
+    if (actualWorkSeconds <= 0 && actualBreakSeconds <= 0) return;
+
+    const currentProj = document.getElementById('pomoProjectSelect').value || 'Ostatní';
+    const currentTask = document.getElementById('pomoTaskInput').value.trim() || 'Pomodoro / Flexi blok';
+
+    let finalWorkMins = 0;
+    let finalBreakMins = 0;
+
+    if (isMacroBreak) {
+        // --- SCÉNÁŘ A: VELKÁ MAKRO PAUZA (1 HODINA) ---
+        // Do práce se započítá čistý odpracovaný čas, 1h velká pauza se loguje jako samostatný odpočinek
+        finalWorkMins = Math.round(actualWorkSeconds / 60);
+        finalBreakMins = Math.round(actualBreakSeconds / 60);
+    } else {
+        // --- SCÉNÁŘ B: STANDARDNÍ POMODORO / FLEXI (Poměr 1:5) ---
+        let allowedBreakSeconds = Math.round(actualWorkSeconds / 5);
+        let appliedBreakToWork = Math.min(actualBreakSeconds, allowedBreakSeconds);
+        let overtimeBreakSeconds = Math.max(0, actualBreakSeconds - allowedBreakSeconds);
+
+        // Výsledný čas práce = odpracovaný čas + uznaná pauza - penalizace za přetažení pauzy
+        let finalWorkSeconds = actualWorkSeconds + appliedBreakToWork - overtimeBreakSeconds;
+        if (finalWorkSeconds < 0) finalWorkSeconds = 0;
+
+        finalWorkMins = Math.round(finalWorkSeconds / 60);
+        finalBreakMins = Math.round(overtimeBreakSeconds / 60);
+    }
+
+    // Uložení práce
+    if (finalWorkMins > 0) {
+        data.logs.push({
+            id: Date.now(),
+            timestamp: new Date().toISOString(),
+            date: getLocalDateString(),
+            project: currentProj,
+            task: currentTask,
+            duration: finalWorkMins
+        });
+        // Do velké pauzy akumulujeme čas pouze z běžných cyklů
+        if (!isMacroBreak) {
+            data.macroAccumulated += finalWorkMins;
+        }
+    }
+
+    // Uložení přetažené (nebo velké makro) pauzy do statistik
+    if (finalBreakMins > 0) {
+        let noteText = isMacroBreak ? 'Zasloužená velká makro pauza' : 'Přetažená Pomodoro pauza (odečtena z práce)';
+        data.breaks.push({
+            id: Date.now() + 1,
+            timestamp: new Date().toISOString(),
+            date: getLocalDateString(),
+            category: isMacroBreak ? 'Spánek' : 'Jiné',
+            note: noteText,
+            duration: finalBreakMins,
+            type: 'pomo'
+        });
+    }
+
+    isMacroBreak = false; // Reset flagu po uložení
+}
+
+ function getLocalDateString(dateObj = new Date()) {
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+    function playAlertSound() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const beep = (delay, freq) => {
+                const osc = ctx.createOscillator(); const gain = ctx.createGain();
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+                gain.gain.setValueAtTime(0.4, ctx.currentTime + delay);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + delay + 0.4);
+                osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.45);
+            };
+            beep(0, 750); beep(0.3, 900); beep(0.6, 1050);
+        } catch(e) { console.error("Audio error:", e); }
+    }
+
+    // --- POMODORO CORE LOGIKA ---
+    function changePomoConfig() {
+        if(pomoState !== 'stopped') { alert("Před změnou režimu resetujte běžící časovač."); return; }
+        resetTimerDisplayByConfig();
+    }
+
+    function resetTimerDisplayByConfig() {
+        const config = document.getElementById('pomoConfigSelect').value;
+        const display = document.getElementById('timerDisplay');
+        if(config === '25-5') display.textContent = "25:00";
+        else if(config === '50-10') display.textContent = "50:00";
+        else display.textContent = "00:00";
+    }
+
+   function handlePomoMainAction() {
+    const config = document.getElementById('pomoConfigSelect').value;
+    const mainBtn = document.getElementById('pomoMainBtn');
+
+    if (pomoState === 'stopped') {
+        actualWorkSeconds = 0;
+        actualBreakSeconds = 0;
+        isMacroBreak = false;
+        if (config === '25-5') pomoTimerSeconds = 25 * 60;
+        else if (config === '50-10') pomoTimerSeconds = 50 * 60;
+        else pomoTimerSeconds = 0;
+
+        pomoState = 'work';
+        startTimerLoop();
+    } 
+    else if (pomoState === 'work' || pomoState === 'work_prompt' || pomoState === 'work_overtime') {
+        // PŘECHOD Z PRÁCE DO PAUZY (Tady ještě neukládáme, jen přepínáme stav)
+        clearInterval(pomoInterval);
+        
+        let calculatedBreakSecs = Math.max(60, Math.round(actualWorkSeconds / 5)); 
+        let currentEarnedMins = Math.round(actualWorkSeconds / 60);
+        // Odhadovaný celkový blok včetně pauzy, který se po pauze připíše
+        let expectedBlockMins = currentEarnedMins + Math.round(currentEarnedMins / 5);
+
+        // Pokud s tímto blokem překročíme 120 minut práce, spustí se velká makro pauza
+        if (data.macroAccumulated + expectedBlockMins >= 120) {
+            pomoState = 'break';
+            pomoTimerSeconds = 60 * 60; // 1 hodina
+            data.macroAccumulated = 0;
+            isMacroBreak = true;
+            alert("🚀 Výborně! Odpracovány 2 hodiny v cyklech. Následuje velká 1hodinová pauza!");
+        } else {
+            pomoState = 'break';
+            pomoTimerSeconds = calculatedBreakSecs;
+            isMacroBreak = false;
+        }
+
+        actualBreakSeconds = 0;
+        startTimerLoop();
+    }
+    else if (pomoState === 'break' || pomoState === 'break_prompt' || pomoState === 'break_overtime') {
+        // NÁVRAT Z PAUZY DO PRÁCE (Tady se cyklus uzavírá a ukládá)
+        clearInterval(pomoInterval);
+
+        saveCurrentPomoCycle();
+
+        actualWorkSeconds = 0;
+        actualBreakSeconds = 0;
+        if (config === '25-5') pomoTimerSeconds = 25 * 60;
+        else if (config === '50-10') pomoTimerSeconds = 50 * 60;
+        else pomoTimerSeconds = 0;
+
+        pomoState = 'work';
+        startTimerLoop();
+    }
+}
+function endWholeSession() {
+    if (pomoState !== 'stopped') {
+        if (!confirm("Časovač momentálně běží. Chcete jej nejprve stopnout a úplně resetovat celou session? (Rozdělaný čas z tohoto běžícího bloku se NEULOŽÍ)")) {
+            return;
+        }
+        // Pokud běžela práce/pauza, vypneme interval
+        clearInterval(pomoInterval);
+        pomoState = 'stopped';
+        actualWorkSeconds = 0;
+        actualBreakSeconds = 0;
+        pomoTimerSeconds = 0;
+        isMacroBreak = false;
+        document.getElementById('pomoMainBtn').textContent = 'Start';
+        document.getElementById('pomoPromptBanner').style.display = 'none';
+        resetTimerDisplayByConfig();
+    } else {
+        // Pokud časovač stál, pro jistotu se uživatele jen zeptáme
+        if (!confirm("Opravdu chcete uzavřít aktuální session a vynulovat postup do velké makro pauzy?")) {
+            return;
+        }
+    }
+
+    // Klíčový krok: Smažeme postup do velké pauzy
+    data.macroAccumulated = 0;
+    
+    // Uložíme a kompletně překreslíme dashboard
+    saveData(); 
+    alert("Session byla úspěšně uzavřena. Akumulovaný čas byl vynulován na 0.");
+}
+function saveCurrentPomoCycle() {
+    if (actualWorkSeconds <= 0 && actualBreakSeconds <= 0) return;
+
+    const currentProj = document.getElementById('pomoProjectSelect').value || 'Ostatní';
+    const currentTask = document.getElementById('pomoTaskInput').value.trim() || 'Pomodoro / Flexi blok';
+
+    let finalWorkMins = 0;
+    let finalBreakMins = 0;
+
+    if (isMacroBreak) {
+        finalWorkMins = Math.round(actualWorkSeconds / 60);
+        finalBreakMins = Math.round(actualBreakSeconds / 60);
+    } else {
+        let allowedBreakSeconds = Math.round(actualWorkSeconds / 5);
+        let appliedBreakToWork = Math.min(actualBreakSeconds, allowedBreakSeconds);
+        let overtimeBreakSeconds = Math.max(0, actualBreakSeconds - allowedBreakSeconds);
+
+        let finalWorkSeconds = actualWorkSeconds + appliedBreakToWork - overtimeBreakSeconds;
+        if (finalWorkSeconds < 0) finalWorkSeconds = 0;
+
+        finalWorkMins = Math.round(finalWorkSeconds / 60);
+        finalBreakMins = Math.round(overtimeBreakSeconds / 60);
+    }
+
+    // POJISTKA: Pokud jsi reálně pracoval, ale zaokrouhlilo se to na 0, dáme 1 minutu
+    if (finalWorkMins === 0 && actualWorkSeconds > 0) {
+        finalWorkMins = 1;
+    }
+
+    if (finalWorkMins > 0) {
+        data.logs.push({
+            id: Date.now(),
+            timestamp: new Date().toISOString(),
+            date: getLocalDateString(),
+            project: currentProj,
+            task: currentTask,
+            duration: finalWorkMins
+        });
+        if (!isMacroBreak) {
+            data.macroAccumulated += finalWorkMins;
+        }
+    }
+
+    if (finalBreakMins > 0) {
+        let noteText = isMacroBreak ? 'Zasloužená velká makro pauza' : 'Přetažená Pomodoro pauza (odečtena z práce)';
+        data.breaks.push({
+            id: Date.now() + 1,
+            timestamp: new Date().toISOString(),
+            date: getLocalDateString(),
+            category: isMacroBreak ? 'Spánek' : 'Jiné',
+            note: noteText,
+            duration: finalBreakMins,
+            type: 'pomo'
+        });
+    }
+
+    isMacroBreak = false;
+}
+    function resetPomodoro() {
+	isMacroBreak = false;
+        clearInterval(pomoInterval);
+        pomoState = 'stopped';
+        actualWorkSeconds = 0;
+        actualBreakSeconds = 0;
+        pomoTimerSeconds = 0;
+        document.getElementById('pomoMainBtn').textContent = 'Start';
+        document.getElementById('pomoPromptBanner').style.display = 'none';
+        resetTimerDisplayByConfig();
+        updateUIStateClass();
+        saveData();
+    }
+
+let lastTickTime = null;
+
+function startTimerLoop() {
+    if (pomoInterval) clearInterval(pomoInterval);
+
+    // Uložíme si přesný čas v milisekundách při spuštění
+    lastTickTime = Date.now();
+
+    // Kontrolujeme čas 4x za sekundu (250 ms), aby bylo UI plynulé a reakce okamžitá
+    pomoInterval = setInterval(() => {
+        const now = Date.now();
+        // Spočítáme, kolik celých sekund REÁLNĚ uplynulo od posledního tiku
+        const elapsedSeconds = Math.floor((now - lastTickTime) / 1000);
+
+        if (elapsedSeconds > 0) {
+            // Posuneme časové razítko o odečtené sekundy
+            lastTickTime += elapsedSeconds * 1000;
+
+            const configEl = document.getElementById('pomoConfigSelect');
+            const config = configEl ? configEl.value : 'standard';
+
+            // Odsimulujeme každou reálně uplynulou sekundu.
+            // Pokud jsi byl pryč 60s, smyčka proběhne 60x v milisekundě
+            // a přesně projde přes stavy (odpočet -> prompt -> přesčas).
+            for (let i = 0; i < elapsedSeconds; i++) {
+
+                // --- STAV: PRÁCE ---
+                if (pomoState === 'work') {
+                    actualWorkSeconds++;
+                    if (config === 'flexible') {
+                        pomoTimerSeconds++; // Flexi stopky počítají nahoru
+                    } else {
+                        pomoTimerSeconds--; // Běžné pomodoro dolů
+                        if (pomoTimerSeconds <= 0) {
+                            playAlertSound();
+                            pomoState = 'work_prompt';
+                            pomoPromptSeconds = 10; // 10s okno pro potvrzení přechodu na pauzu
+                        }
+                    }
+                }
+                // --- STAV: PRÁCE KONEC PROMPT (10s OKNO) ---
+                else if (pomoState === 'work_prompt') {
+                    actualWorkSeconds++;
+                    pomoPromptSeconds--;
+                    if (pomoPromptSeconds <= 0) {
+                        pomoState = 'work_overtime';
+                        pomoTimerSeconds = 0; // Začínáme měřit přesčas od nuly dolů (do mínusu)
+                    }
+                }
+                // --- STAV: PRÁCE PŘESČAS ---
+                else if (pomoState === 'work_overtime') {
+                    actualWorkSeconds++;
+                    pomoTimerSeconds--; // Padá do mínusu, reprezentuje čas navíc
+                }
+                // --- STAV: PŘESTÁVKA ---
+                else if (pomoState === 'break') {
+                    actualBreakSeconds++;
+                    pomoTimerSeconds--;
+                    if (pomoTimerSeconds <= 0) {
+                        playAlertSound();
+                        pomoState = 'break_prompt';
+                        pomoPromptSeconds = 5; // 5s okno pro návrat do práce
+                    }
+                }
+                // --- STAV: PŘESTÁVKA KONEC PROMPT (5s OKNO) ---
+                else if (pomoState === 'break_prompt') {
+                    actualBreakSeconds++;
+                    pomoPromptSeconds--;
+                    if (pomoPromptSeconds <= 0) {
+                        pomoState = 'break_overtime';
+                        pomoTimerSeconds = 0;
+                    }
+                }
+                // --- STAV: PŘESTÁVKA PŘETAŽENÍ ---
+                else if (pomoState === 'break_overtime') {
+                    actualBreakSeconds++;
+                    pomoTimerSeconds--;
+                }
+            }
+
+            // Po dopočítání reálného času aktualizujeme zobrazení
+            refreshTimerView();
+        }
+    }, 250);
+}
+
+    function refreshTimerView() {
+        const display = document.getElementById('timerDisplay');
+        const mainBtn = document.getElementById('pomoMainBtn');
+        const banner = document.getElementById('pomoPromptBanner');
+        
+        // Formátování času MM:SS (i pro záporné hodnoty přesčasu)
+        let absSecs = Math.abs(pomoTimerSeconds);
+        let m = Math.floor(absSecs / 60).toString().padStart(2, '0');
+        let s = (absSecs % 60).toString().padStart(2, '0');
+        let sign = pomoTimerSeconds < 0 ? "+" : "";
+        display.textContent = `${sign}${m}:${s}`;
+
+        updateUIStateClass();
+
+        // Dynamické texty tlačítek a informačních bannerů podle stavu
+        if (pomoState === 'work') {
+            mainBtn.textContent = 'Dát si pauzu';
+            banner.style.display = 'none';
+        } else if (pomoState === 'work_prompt') {
+            mainBtn.textContent = 'Přejít na pauzu';
+            banner.style.display = 'block';
+            banner.textContent = `⏳ Pokračovat do práce? Přechod na pauzu za: ${pomoPromptSeconds}s`;
+        } else if (pomoState === 'work_overtime') {
+            mainBtn.textContent = 'Ukončit přesčas & pauza';
+            banner.style.display = 'block';
+            banner.textContent = `⚠️ Pracuješ přesčas! Čas navíc se započítává do práce.`;
+        } else if (pomoState === 'break') {
+            mainBtn.textContent = 'Zpět do práce';
+            banner.style.display = 'none';
+        } else if (pomoState === 'break_prompt') {
+            mainBtn.textContent = 'Start práce';
+            banner.style.display = 'block';
+            banner.textContent = `⏳ Konec pauzy! Zpět do práce za: ${pomoPromptSeconds}s`;
+        } else if (pomoState === 'break_overtime') {
+            mainBtn.textContent = 'Ukončit přetaženou pauzu';
+            banner.style.display = 'block';
+            banner.textContent = `⚠️ Přetahuješ pauzu! Extra čas prodlužuje přestávku.`;
+        }
+    }
+
+    function updateUIStateClass() {
+        const box = document.getElementById('pomoBoxContainer');
+        const label = document.getElementById('pomoStateLabel');
+        box.className = 'pomodoro-box';
+        
+        if(pomoState === 'stopped') { label.textContent = 'Neaktivní'; }
+        else if(pomoState === 'work') { box.classList.add('pomo-state-work'); label.textContent = 'Práce 💻'; }
+        else if(pomoState === 'work_prompt') { box.classList.add('pomo-state-prompt'); label.textContent = 'Čekání na akci 🤔'; }
+        else if(pomoState === 'work_overtime') { box.classList.add('pomo-state-overtime'); label.textContent = 'Práce (Přesčas) 🔥'; }
+        else if(pomoState === 'break' || pomoState === 'break_prompt' || pomoState === 'break_overtime') { 
+            box.classList.add('pomo-state-break'); 
+            label.textContent = 'Pauza ☕'; 
+        }
+        document.getElementById('macroProgressDisplay').textContent = `Akumulovaná práce do makro pauzy: ${data.macroAccumulated} / 120 min`;
+    }
+
+    // --- AUDIO & SPOTIFY LOGIKA ---
+   function handleNoiseChange() {
+    const type = document.getElementById('noiseSelect').value;
+    
+    // 1. Inicializace AudioContextu
+    if (!noiseAudioCtx) { 
+        noiseAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+    }
+    
+    // Problém s tichem: Prohlížeče často uspí zvuk, musíme ho probudit
+    if (noiseAudioCtx.state === 'suspended') {
+        noiseAudioCtx.resume();
+    }
+    
+    // 2. Zastavení předchozího zvuku
+    if (noiseSource) { 
+        try { noiseSource.stop(); noiseSource.disconnect(); } catch(e){} 
+        noiseSource = null; 
+    }
+
+    // Pokud je vybráno "Vypnuto", skončíme
+    if (type === 'none') return;
+
+    // 3. Generování šumu
+    let bufferSize = 2 * noiseAudioCtx.sampleRate;
+    let noiseBuffer = noiseAudioCtx.createBuffer(1, bufferSize, noiseAudioCtx.sampleRate);
+    let output = noiseBuffer.getChannelData(0);
+    
+    let lastOut = 0.0;
+    for (let i = 0; i < bufferSize; i++) {
+        let white = Math.random() * 2 - 1;
+        if (type === 'white') {
+            output[i] = white;
+        } else if (type === 'brown') {
+            output[i] = (lastOut + (0.02 * white)) / 1.02;
+            lastOut = output[i];
+            output[i] *= 3.5; 
+        }
+    }
+
+    noiseSource = noiseAudioCtx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+    noiseSource.loop = true;
+
+    // 4. Vytvoření Gain nodu (pokud neexistuje)
+    if (!noiseGainNode) {
+        noiseGainNode = noiseAudioCtx.createGain();
+        noiseGainNode.connect(noiseAudioCtx.destination);
+    }
+    
+    // OPRAVA: Nastavení aktuální hlasitosti z posuvníku VŽDY (i když už uzel existoval)
+    let vol = parseFloat(document.getElementById('noiseVolume').value) || 0;
+    noiseGainNode.gain.setValueAtTime(vol, noiseAudioCtx.currentTime);
+
+    // 5. Propojení a spuštění
+    noiseSource.connect(noiseGainNode);
+    noiseSource.start();
+}
+
+function updateNoiseVolume(val) {
+    const volume = parseFloat(val) || 0;
+    const percent = Math.round(volume * 100);
+
+    // 1. Změna textu procent v HTML
+    const percentEl = document.getElementById('noiseVolPercent');
+    if (percentEl) {
+        percentEl.textContent = percent + ' %';
+    }
+
+    // 2. Okamžitá plynulá úprava hlasitosti běžícího šumu
+    if (typeof noiseGainNode !== 'undefined' && noiseGainNode && typeof noiseAudioCtx !== 'undefined' && noiseAudioCtx) {
+        try {
+            noiseGainNode.gain.setValueAtTime(volume, noiseAudioCtx.currentTime);
+        } catch (e) {
+            console.log("AudioContext ještě není připraven.");
+        }
+    }
+}
+    function updateSpotifyEmbed(rawUrl) {
+        if (!rawUrl.trim()) return;
+        let embedUrl = rawUrl;
+        if (rawUrl.includes("spotify.com") && !rawUrl.includes("/embed/")) {
+            embedUrl = rawUrl.replace("spotify.com/", "spotify.com/embed/");
+            if(embedUrl.includes("?")) { embedUrl = embedUrl.split("?")[0] + "?utm_source=generator"; }
+            else { embedUrl += "?utm_source=generator"; }
+        }
+        data.spotifyUrl = embedUrl;
+        document.getElementById('spotifyIframe').src = embedUrl;
+        localStorage.setItem('ultimateTimeTrackerData_v4', JSON.stringify(data));
+    }
+
+    // --- MANUÁLNÍ ZÁPISY ---
+    function logWorkManual(e) {
+        e.preventDefault();
+        const project = document.getElementById('workProjectSelect').value;
+        const durationInput = parseFloat(document.getElementById('workTimeInput').value);
+        const unit = document.getElementById('workUnitSelect').value;
+        const task = document.getElementById('workTaskInput').value.trim();
+        const customTimestamp = document.getElementById('workTimestampInput').value; 
+
+        const minutes = unit === 'h' ? durationInput * 60 : durationInput;
+        const parsedDate = new Date(customTimestamp);
+
+        data.logs.push({
+            id: Date.now(), timestamp: new Date(parsedDate).toISOString(), date: getLocalDateString(parsedDate),
+            project: project, task: task, duration: minutes
+        });
+
+        document.getElementById('workTimeInput').value = '';
+        document.getElementById('workTaskInput').value = '';
+        initTimestampInput();
+        saveData();
+    }
+
+    function logBreakManual(e) {
+        e.preventDefault();
+        const category = document.getElementById('breakCategorySelect').value;
+        const duration = parseFloat(document.getElementById('breakDurationInput').value);
+        const note = document.getElementById('breakNoteInput').value.trim();
+
+        data.breaks.push({
+            id: Date.now(), timestamp: new Date().toISOString(), date: getLocalDateString(),
+            category: category, note: note || 'Manuálně zadaná pauza', duration: duration, type: 'manual'
+        });
+
+        document.getElementById('breakDurationInput').value = '';
+        document.getElementById('breakNoteInput').value = '';
+        saveData();
+    }
+
+    // --- SPRÁVA KATEGORIÍ A PROJEKTŮ ---
+    function addNewProject() {
+        const input = document.getElementById('newProjectName'); const name = input.value.trim();
+        if(name && !data.projects.includes(name)) { data.projects.push(name); input.value = ''; saveData(); }
+    }
+
+    function addNewBreakCategory() {
+        const input = document.getElementById('newBreakCategoryName'); const name = input.value.trim();
+        if(name && !data.breakCategories[name]) {
+            const palette = ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#14b8a6', '#f43f5e', '#6366f1'];
+            const randomColor = palette[Math.floor(Math.random() * palette.length)];
+            data.breakCategories[name] = { name: name, color: randomColor };
+            input.value = ''; saveData();
+        }
+    }
+
+    function deleteItem(id, type) {
+        if(confirm('Opravdu chcete záznam vymazat?')) {
+            if(type === 'work') data.logs = data.logs.filter(l => l.id !== id);
+            if(type === 'break') data.breaks = data.breaks.filter(b => b.id !== id);
+            saveData();
+        }
+    }
+
+    function updateGoal() {
+        data.dailyGoal = parseFloat(document.getElementById('dailyGoalInput').value) || 2; saveData();
+    }
+
+    function initTimestampInput() {
+        const now = new Date(); now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('workTimestampInput').value = now.toISOString().slice(0, 16);
+    }
+
+    function moveMonth(dir) { currentCalendarDate.setMonth(currentCalendarDate.getMonth() + dir); renderCalendar(); }
+
+    // --- KALENDÁŘ ENGINE ---
+    function renderCalendar() {
+        const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth();
+        const monthNames = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
+        document.getElementById('calendarMonthLabel').textContent = `${monthNames[month]} ${year}`;
+        const grid = document.getElementById('calendarGrid'); grid.innerHTML = '';
+
+        const daysOfWeek = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
+        daysOfWeek.forEach(d => { let div = document.createElement('div'); div.className = 'calendar-day-name'; div.textContent = d; grid.appendChild(div); });
+
+        let firstDayIndex = new Date(year, month, 1).getDay() - 1; if(firstDayIndex < 0) firstDayIndex = 6; 
+        const totalDays = new Date(year, month + 1, 0).getDate();
+        for(let i = 0; i < firstDayIndex; i++) { grid.appendChild(document.createElement('div')); }
+
+        for(let day = 1; day <= totalDays; day++) {
+            const cellDateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+            let dayMins = data.logs.filter(l => l.date === cellDateStr).reduce((s,l)=> s+l.duration, 0);
+            let cell = document.createElement('div'); cell.className = 'calendar-cell'; cell.innerHTML = `<div>${day}</div>`;
+            if(dayMins > 0) {
+                cell.classList.add('has-work');
+                let tb = document.createElement('div'); tb.className = 'calendar-work-hours'; tb.textContent = `${(dayMins/60).toFixed(1)}h`;
+                cell.appendChild(tb);
+            }
+            grid.appendChild(cell);
+        }
+    }
+
+function renderCategoryColors() {
+    // POJISTKA: Vyhledá prvek podle ID NEBO podle CSS třídy .color-manager
+    const listEl = document.getElementById('categoryColorsList') || document.querySelector('.color-manager'); 
+    
+    if (!listEl) {
+        console.error("Kontejner pro seznam kategorií nebyl v HTML nalezen!");
+        return;
+    }
+
+    listEl.innerHTML = '';
+
+    if (!data.breakCategories) return;
+
+    Object.keys(data.breakCategories).forEach(key => {
+        const cat = data.breakCategories[key];
+        if (!cat) return;
+
+        // Ošetření, pokud je kategorie objekt nebo jen prostý název
+        const catName = typeof cat === 'object' ? (cat.name || key) : cat;
+        const catColor = typeof cat === 'object' ? (cat.color || '#cbd5e0') : '#cbd5e0';
+
+        const row = document.createElement('div');
+        row.className = 'category-color-row';
+
+        // Název kategorie
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = catName;
+
+        // Pravá strana: Barva + Tlačítko Smazat
+        const rightSide = document.createElement('div');
+        rightSide.style.display = 'flex';
+        rightSide.style.alignItems = 'center';
+        rightSide.style.gap = '8px';
+
+        // Kolečko s barevným pickerem podle tvého CSS
+        const circle = document.createElement('div');
+        circle.className = 'color-picker-circle';
+        circle.style.backgroundColor = catColor;
+
+        const colorInput = document.createElement('input');
+        colorInput.type = 'color';
+        colorInput.value = catColor;
+        colorInput.onchange = (e) => {
+            if (typeof data.breakCategories[key] === 'object') {
+                data.breakCategories[key].color = e.target.value;
+            } else {
+                data.breakCategories[key] = { name: catName, color: e.target.value };
+            }
+            saveData();
+            renderAll();
+        };
+        circle.appendChild(colorInput);
+        rightSide.appendChild(circle);
+
+        // Tlačítko pro SMAZÁNÍ (zobrazí se u všech vlastních kategorií kromě 'auto')
+        if (key !== 'auto') {
+            const delBtn = document.createElement('button');
+            delBtn.type = 'button';
+            delBtn.className = 'btn-del-cat';
+            delBtn.innerHTML = '🗑️';
+            delBtn.title = 'Smazat kategorii';
+            delBtn.onclick = () => deleteCategory(key);
+            rightSide.appendChild(delBtn);
+        }
+
+        row.appendChild(nameSpan);
+        row.appendChild(rightSide);
+        listEl.appendChild(row);
+    });
+}
+function deleteCategory(key) {
+    const catName = data.breakCategories[key] ? data.breakCategories[key].name : key;
+
+    if (confirm(`Opravdu chcete smazat kategorii "${catName}"?`)) {
+        // Smazání kategorie ze struktury data
+        delete data.breakCategories[key];
+
+        // Uložení a překreslení celého UI
+        saveData();
+        renderAll();
+    }
+}
+    function updateCategoryColor(key, newColor) {
+        data.breakCategories[key].color = newColor;
+        localStorage.setItem('ultimateTimeTrackerData_v4', JSON.stringify(data));
+        recalculateAndRefreshCharts();
+    }
+
+    function recalculateAndRefreshCharts() {
+        const todayStr = getLocalDateString();
+        const projTotals = {}; data.projects.forEach(p => projTotals[p] = 0);
+        data.logs.forEach(l => { if(projTotals[l.project] !== undefined) projTotals[l.project] += l.duration; });
+        let { autoBreakMins } = buildTodayTimeline(todayStr);
+        renderCharts(projTotals, autoBreakMins);
+        renderTimelineTable(todayStr);
+    }
+
+    // --- MODAL PRO EDITACI / ROZDĚLENÍ AUTO-GAPU ---
+    function openSplitModal(startStr, endStr) {
+        document.getElementById('splitModalOverlay').classList.add('active');
+        const container = document.getElementById('modalSegmentsContainer'); container.innerHTML = '';
+        addModalSegmentRow(startStr, endStr);
+    }
+    function closeModal() { document.getElementById('splitModalOverlay').classList.remove('active'); }
+
+    function addModalSegmentRow(start = "", end = "") {
+        const container = document.getElementById('modalSegmentsContainer'); const row = document.createElement('div'); row.className = 'segment-row';
+        let options = Object.keys(data.breakCategories).filter(k => k !== 'auto').map(k => `<option value="${k}">${data.breakCategories[k].name}</option>`).join('');
+        row.innerHTML = `<input type="time" class="seg-start" value="${start}" required><input type="time" class="seg-end" value="${end}" required><select class="seg-category">${options}</select>`;
+        container.appendChild(row);
+    }
+
+function handleSplitFormSubmit(e) {
+    e.preventDefault(); 
+    const rows = document.querySelectorAll('#splitModalOverlay .segment-row'); 
+    const todayStr = getLocalDateString();
+    
+    rows.forEach((row, idx) => {
+        const start = row.querySelector('.seg-start').value; 
+        const end = row.querySelector('.seg-end').value; 
+        const cat = row.querySelector('.seg-category').value;
+        
+        if(start && end) {
+            const [sH, sM] = start.split(':').map(Number); 
+            const [eH, eM] = end.split(':').map(Number);
+            let mins = (eH * 60 + eM) - (sH * 60 + sM);
+            
+            if(mins > 0) {
+                data.breaks.push({
+                    id: Date.now() + idx, 
+                    // OPRAVA: Změněno z `${todayStr}T${start}` na `${todayStr}T${end}`
+                    // Systém potřebuje vědět, kdy pauza SKONČILA, aby z ní správně odečetl minuty do minulosti.
+                    timestamp: new Date(`${todayStr}T${end}`).toISOString(),
+                    date: todayStr, 
+                    category: cat, 
+                    note: 'Rozděleno z automatické pauzy', 
+                    duration: mins, 
+                    type: 'manual'
+                });
+            }
+        }
+    });
+    closeModal(); 
+    saveData();
+}
+
+    // --- STRUKTURA DNEŠNÍ ČASOVÉ OSY (INTERVALY OD - DO) ---
+    function buildTodayTimeline(todayStr) {
+        let todayItems = [];
+        data.logs.forEach(l => {
+            if(l.date === todayStr) {
+                let end = new Date(l.timestamp); let start = new Date(end.getTime() - l.duration * 60000);
+                todayItems.push({ masterType: 'work', start, end, duration: l.duration, raw: l });
+            }
+        });
+        data.breaks.forEach(b => {
+            if(b.date === todayStr) {
+                let end = new Date(b.timestamp); let start = new Date(end.getTime() - b.duration * 60000);
+                todayItems.push({ masterType: 'break', start, end, duration: b.duration, raw: b });
+            }
+        });
+
+        todayItems.sort((a,b) => a.start - b.start);
+
+        let mergedTimeline = [];
+        if(todayItems.length > 0) {
+            for(let i = 0; i < todayItems.length; i++) {
+                mergedTimeline.push(todayItems[i]);
+                if(i < todayItems.length - 1) {
+                    let gap = Math.round((todayItems[i+1].start - todayItems[i].end) / 60000);
+                    if(gap > 1) {
+                        mergedTimeline.push({
+                            masterType: 'auto-break', start: todayItems[i].end, end: todayItems[i+1].start, duration: gap,
+                            raw: { project: 'Systém', category: 'auto', task: 'Volný čas mezi činnostmi' }
+                        });
+                    }
+                }
+            }
+            let trailingGap = Math.round((new Date() - todayItems[todayItems.length - 1].end) / 60000);
+            if(trailingGap > 1 && todayItems[todayItems.length - 1].end < new Date()) {
+                mergedTimeline.push({
+                    masterType: 'auto-break', start: todayItems[todayItems.length - 1].end, end: new Date(), duration: trailingGap,
+                    raw: { project: 'Systém', category: 'auto', task: 'Čas od poslední aktivity do teď' }
+                });
+            }
+        }
+        let autoBreakMins = mergedTimeline.filter(i => i.masterType === 'auto-break').reduce((s,i)=>s+i.duration, 0);
+        return { mergedTimeline, autoBreakMins };
+    }
+
+    function renderTimelineTable(todayStr) {
+        const masterTbody = document.getElementById('masterHistoryTable'); masterTbody.innerHTML = '';
+        let { mergedTimeline } = buildTodayTimeline(todayStr); let historyList = [...mergedTimeline];
+
+        data.logs.forEach(l => {
+            if(l.date !== todayStr) {
+                let end = new Date(l.timestamp); let start = new Date(end.getTime() - l.duration * 60000);
+                historyList.push({ masterType: 'work', start, end, duration: l.duration, raw: l });
+            }
+        });
+        data.breaks.forEach(b => {
+            if(b.date !== todayStr) {
+                let end = new Date(b.timestamp); let start = new Date(end.getTime() - b.duration * 60000);
+                historyList.push({ masterType: 'break', start, end, duration: b.duration, raw: b });
+            }
+        });
+
+        historyList.sort((a,b) => b.start - a.start);
+
+        historyList.forEach(item => {
+            let tr = document.createElement('tr');
+            let dStr = item.start.toLocaleDateString('cs-CZ', {day:'2-digit', month:'2-digit'});
+            let tStart = item.start.toTimeString().slice(0,5); let tEnd = item.end.toTimeString().slice(0,5);
+            let intervalText = `${dStr} (${tStart} - ${tEnd})`;
+
+            let badgeHtml = '', catProj = '', textDesc = '', actionHtml = '';
+            let durStr = item.duration >= 60 ? `${Math.floor(item.duration/60)}h ${item.duration%60}m` : `${item.duration} min`;
+
+            if(item.masterType === 'work') {
+                badgeHtml = `<span class="badge badge-work">PRÁCE</span>`;
+                catProj = item.raw.project; textDesc = item.raw.task;
+                actionHtml = `<button class="btn-danger" style="width:auto; padding:2px 6px; font-size:0.75rem;" onclick="deleteItem(${item.raw.id}, 'work')">X</button>`;
+            } else if (item.masterType === 'break') {
+                let color = data.breakCategories[item.raw.category] ? data.breakCategories[item.raw.category].color : 'var(--warning)';
+                badgeHtml = `<span class="badge" style="background:${color}; color:#fff;">${item.raw.category.toUpperCase()}</span>`;
+                catProj = data.breakCategories[item.raw.category] ? data.breakCategories[item.raw.category].name : item.raw.category;
+                textDesc = item.raw.note;
+                actionHtml = `<button class="btn-danger" style="width:auto; padding:2px 6px; font-size:0.75rem;" onclick="deleteItem(${item.raw.id}, 'break')">X</button>`;
+            } else {
+                let color = data.breakCategories['auto'].color;
+                badgeHtml = `<span class="badge" style="background:${color}; color:#fff;">AUTO-GAP</span>`;
+                catProj = data.breakCategories['auto'].name; textDesc = item.raw.task;
+                actionHtml = `<button onclick="openSplitModal('${tStart}', '${tEnd}')" style="width:auto; padding:2px 6px; font-size:0.75rem; background-color:var(--success); color:white;">Rozdělit</button>`;
+            }
+
+            tr.innerHTML = `<td>${intervalText}</td><td>${badgeHtml}</td><td><strong>${catProj}</strong></td><td>${textDesc}</td><td>${durStr}</td><td>${actionHtml}</td>`;
+            masterTbody.appendChild(tr);
+        });
+    }
+
+    // --- RENDER CORE ---
+function renderAll() {
+    const todayStr = getLocalDateString();
+    
+    const syncProj = (id) => {
+        const el = document.getElementById(id); const val = el.value; el.innerHTML = '';
+        data.projects.forEach(p => { let o = document.createElement('option'); o.value = p; o.textContent = p; el.appendChild(o); });
+        if(data.projects.includes(val)) el.value = val;
+    };
+    syncProj('pomoProjectSelect'); syncProj('workProjectSelect');
+
+    const breakCatSelect = document.getElementById('breakCategorySelect');
+    const activeSelBreak = breakCatSelect.value; breakCatSelect.innerHTML = '';
+    Object.keys(data.breakCategories).forEach(k => {
+        if(k !== 'auto') { 
+            let o = document.createElement('option'); o.value = k; o.textContent = data.breakCategories[k].name; breakCatSelect.appendChild(o);
+        }
+    });
+    if(data.breakCategories[activeSelBreak]) breakCatSelect.value = activeSelBreak;
+
+    updateUIStateClass();
+
+    const todayWorkMins = data.logs.filter(l => l.date === todayStr).reduce((s,l)=>s+l.duration, 0);
+    const todayExplicitBreakMins = data.breaks.filter(b => b.date === todayStr).reduce((s,b)=>s+b.duration, 0);
+    let { autoBreakMins } = buildTodayTimeline(todayStr);
+
+    document.getElementById('statsTodayWork').textContent = `${Math.floor(todayWorkMins/60)}h ${todayWorkMins%60}m`;
+    document.getElementById('statsTodayExplicitBreaks').textContent = `${todayExplicitBreakMins} min`;
+    document.getElementById('statsTodayAutoBreaks').textContent = `${autoBreakMins} min`;
+
+    // Progress bar rendering (dnešní cíl)
+    document.getElementById('dailyGoalInput').value = data.dailyGoal;
+    const targetMins = data.dailyGoal * 60; const goalStatusEl = document.getElementById('goalStatusText');
+    const progressBarEl = document.getElementById('goalProgressBar');
+
+    let percentage = targetMins > 0 ? Math.round((todayWorkMins / targetMins) * 100) : 0;
+    progressBarEl.style.width = `${Math.min(percentage, 100)}%`; progressBarEl.textContent = `${percentage}%`;
+
+    if (percentage < 100) {
+        progressBarEl.style.backgroundColor = "var(--primary)"; let rem = targetMins - todayWorkMins;
+        goalStatusEl.innerHTML = `Do cíle zbývá odpracovat: <span style="color: var(--primary)">${Math.floor(rem/60)}h ${rem%60}m</span>`;
+    } else if (percentage >= 100 && percentage < 125) {
+        progressBarEl.style.backgroundColor = "var(--success)"; let over = todayWorkMins - targetMins;
+        goalStatusEl.innerHTML = `🎉 Splněno denní minimum! Přesčas: <span style="color: var(--success)">${Math.floor(over/60)}h ${over%60}m</span>`;
+    } else {
+        progressBarEl.style.backgroundColor = "var(--purple)"; let over = todayWorkMins - targetMins;
+        goalStatusEl.innerHTML = `🚀 Skvělý výkon! Limit překonán o: <span style="color: var(--purple)">${Math.floor(over/60)}h ${over%60}m</span>`;
+    }
+
+    // PROJEKTY: Počítáme CELKOVÝ čas za celou dobu (bez filtru na datum)
+    const projTotals = {}; data.projects.forEach(p => projTotals[p] = 0);
+    data.logs.forEach(l => { 
+        if(projTotals[l.project] !== undefined) projTotals[l.project] += l.duration; 
+    });
+
+    const projTbody = document.querySelector('#projectSummaryTable tbody'); projTbody.innerHTML = '';
+    for(let p in projTotals) {
+        let tr = document.createElement('tr'); tr.innerHTML = `<td><strong>${p}</strong></td><td>${Math.floor(projTotals[p]/60)}h ${projTotals[p]%60}m</td>`;
+        projTbody.appendChild(tr);
+    }
+
+
+    renderCalendar();
+    renderCategoryColors();
+    renderTimelineTable(todayStr);
+    renderCharts(projTotals, autoBreakMins);
+}
+    // --- CHART.JS INICIALIZACE ---
+function renderCharts(projTotals, currentAutoBreak) {
+    if(chartD) chartD.destroy(); if(chartB) chartB.destroy(); if(chartP) chartP.destroy();
+
+    const todayStr = getLocalDateString();
+
+    // 1. GRAF: Aktivita během dne (POUZE DNES)
+    let dayHours = Array(24).fill(0);
+    data.logs
+        .filter(l => l.date === todayStr) // <- filtr jen pro dnešek
+        .forEach(l => { dayHours[new Date(l.timestamp).getHours()] += (l.duration / 60); });
+
+    chartD = new Chart(document.getElementById('chartDayTime'), {
+        type: 'line',
+        data: { 
+            labels: Array.from({length:24}, (_,i)=>`${i}h`), 
+            datasets:[{label:'Odpracované hodiny', data:dayHours, borderColor:'#3182ce', backgroundColor:'rgba(49,130,206,0.1)', fill:true, tension:0.2}] 
+        },
+        options: { responsive:true, maintainAspectRatio:false }
+    });
+
+    // 2. GRAF: Struktura přestávek (POUZE DNES)
+    let breakCats = {}; Object.keys(data.breakCategories).forEach(k => breakCats[k] = 0);
+    data.breaks
+        .filter(b => b.date === todayStr) // <- filtr jen pro dnešek
+        .forEach(b => { if(breakCats[b.category] !== undefined) breakCats[b.category] += b.duration; });
+    
+    breakCats['auto'] += currentAutoBreak;
+
+    chartB = new Chart(document.getElementById('chartBreaksType'), {
+        type: 'bar',
+        data: { 
+            labels: Object.keys(breakCats).map(k => data.breakCategories[k].name), 
+            datasets:[{label:'Minuty', data:Object.values(breakCats), backgroundColor:Object.keys(breakCats).map(k => data.breakCategories[k].color)}] 
+        },
+        options: { responsive:true, maintainAspectRatio:false }
+    });
+
+    // 3. GRAF: Koláčový graf projektů (CELKOVÁ DOBA z projTotals)
+    chartP = new Chart(document.getElementById('chartProjPie'), {
+        type: 'pie',
+        data: { labels: Object.keys(projTotals), datasets: [{ data: Object.values(projTotals), backgroundColor: ['#3182ce', '#38a169', '#dd6b20', '#e53e3e', '#805ad5', '#ec4899'] }] },
+        options: { responsive:true, maintainAspectRatio:false }
+    });
+}
+
+    initTimestampInput();
+    renderAll();
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tvůj nový požadovaný odkaz
+    const myPlaylist = "https://open.spotify.com/playlist/36kAGzrdyEpF19t91zEUJN";
+
+    // 2. Najde políčko a natvrdo do něj zapíše nový odkaz
+    const input = document.getElementById('spotifyUrlInput');
+    if (input) {
+        input.value = myPlaylist;
+        
+        // Uloží nový odkaz do paměti a spustí přehrávač
+        localStorage.setItem('mySavedMusicUrl', myPlaylist);
+        if (typeof updateMediaEmbed === 'function') {
+            updateMediaEmbed(myPlaylist);
+        }
+    }
+});
+</script>
+
+</body>
+</html>
