@@ -19,11 +19,11 @@
             --purple: #805ad5;
 
             /* Gauge Mood Palette */
-            --mood-1: #ef4444; /* Red - Crying / Very Sad */
-            --mood-2: #f97316; /* Orange - Sad */
-            --mood-3: #eab308; /* Yellow - Neutral */
-            --mood-4: #84cc16; /* Light Green - Happy */
-            --mood-5: #22c55e; /* Green - Very Happy */
+            --mood-1: #ef4444; 
+            --mood-2: #f97316; 
+            --mood-3: #eab308; 
+            --mood-4: #84cc16; 
+            --mood-5: #22c55e; 
         }
 
         body {
@@ -45,7 +45,6 @@
             gap: 15px;
         }
 
-        /* 3 COLUMN GRID LAYOUT (MATCHING LAYOUT IMAGE) */
         .grid-3col {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -91,9 +90,10 @@
         .btn-secondary { background-color: #4a5568; color: white; }
         .btn-secondary:hover { background-color: #2d3748; }
         .btn-danger { background-color: var(--danger); }
+        .btn-success { background-color: #38a169; }
+        .btn-success:hover { background-color: #2f855a; }
         .btn-sm { width: auto !important; padding: 6px 12px !important; font-size: 0.8rem !important; }
         
-        /* FADING LANGUAGE DROPDOWN */
         .lang-dropdown-container {
             position: relative;
             display: inline-block;
@@ -158,7 +158,6 @@
             color: var(--primary);
         }
 
-        /* VECTOR GAUGE SMILEY MOOD SELECTOR */
         .smiley-selector-gauge {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -210,7 +209,220 @@
         }
         .mood-badge-icon svg { width: 15px; height: 15px; stroke: #ffffff; }
 
-        /* Pomodoro States Styling */
+        /* --- FLIP CARD & FOREST APP STYLING --- */
+        .flip-card-container {
+            perspective: 1200px;
+            width: 100%;
+            height: 500px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card-container.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .flip-card-back {
+            background: radial-gradient(circle at center, #183329 0%, #0d1b15 100%);
+            color: #ffffff;
+            transform: rotateY(180deg);
+            padding: 20px;
+            border: 2px solid #234737;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+
+        /* Forest App Specific Layout */
+        .forest-app-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+        }
+        .forest-app-header {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .forest-time-tabs {
+            display: flex;
+            background: #09130e;
+            border-radius: 10px;
+            padding: 4px;
+            border: 1px solid #234737;
+        }
+        .forest-time-tab {
+            padding: 5px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #a7f3d0;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .forest-time-tab.active {
+            background: #ffffff;
+            color: #0d1b15;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .forest-year-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+        }
+        .forest-nav-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #234737;
+            border-radius: 6px;
+            color: #a7f3d0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 2px 12px;
+            transition: background 0.2s;
+        }
+        .forest-nav-btn:hover { background: rgba(255,255,255,0.15); color: #ffffff; }
+
+        /* 3D ISOMETRIC STAGE & LANDSCAPE */
+        .forest-iso-stage {
+            width: 100%;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: visible;
+        }
+        .iso-dirt-block {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            transform: rotateX(55deg) rotateZ(-45deg);
+            transform-style: preserve-3d;
+            overflow: visible;
+        }
+        .iso-dirt-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #7c4d2b 0%, #4e2e18 100%);
+            transform: translateZ(-26px);
+            border-radius: 6px;
+            box-shadow: -20px 20px 0 #3d2312, -35px 35px 25px rgba(0,0,0,0.75);
+        }
+        .iso-grass-grid {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #5d9e2b;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 2px;
+            padding: 3px;
+            border-radius: 6px;
+            border: 2px solid #488020;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            transform-style: preserve-3d;
+        }
+        .iso-tile {
+            background: linear-gradient(135deg, #7bc638 0%, #68a82d 100%);
+            border-radius: 3px;
+            position: relative;
+        }
+        .iso-tile:nth-child(even) { 
+            background: linear-gradient(135deg, #71b832 0%, #5d9829 100%); 
+        }
+
+        /* HIGH-DETAIL VECTOR TREES & PLANTS LAYER */
+        .iso-trees-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 2px;
+            padding: 3px;
+            pointer-events: none;
+            transform-style: preserve-3d;
+            transform: translateZ(3px);
+        }
+        .iso-tree-cell {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+        }
+        .iso-tree-object {
+            transform: rotateZ(45deg) rotateX(-55deg) scaleY(1.7) translateY(-38%);
+            transform-origin: center bottom;
+            width: 44px;
+            height: 56px;
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            filter: drop-shadow(0px 10px 5px rgba(0,0,0,0.5));
+            user-select: none;
+        }
+        .iso-tree-object:hover {
+            transform: rotateZ(45deg) rotateX(-55deg) scaleY(1.7) translateY(-45%) scale(1.25);
+            filter: drop-shadow(0px 15px 8px rgba(0,0,0,0.75));
+        }
+        .iso-tree-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .forest-app-footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: bold;
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+        .forest-stat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,0,0,0.45);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #a7f3d0;
+            border: 1px solid #234737;
+        }
+
         .pomodoro-box { text-align: center; padding: 15px; background: #edf2f7; border-radius: 8px; transition: all 0.3s ease; }
         .pomo-state-work { background: #ebf8ff; border: 2px solid var(--primary); }
         .pomo-state-prompt { background: #feebc8; border: 2px solid var(--warning); animation: pulse-yellow 1s infinite alternate; }
@@ -223,7 +435,6 @@
         .macro-progress { font-size: 0.8rem; color: #4a5568; margin-bottom: 10px; font-weight: bold; }
         .prompt-banner { font-size: 0.88rem; font-weight: bold; color: #c05621; margin-bottom: 8px; }
 
-        /* Calendar Styling */
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
         .calendar-day-name { font-weight: bold; font-size: 0.75rem; color: #718096; padding: 4px 0; }
@@ -245,11 +456,10 @@
         .calendar-work-hours { font-weight: bold; color: var(--primary); font-size: 0.7rem; background: #ebf8ff; border-radius: 3px; }
         .calendar-mood-icons { display: flex; justify-content: center; margin-top: 2px; }
 
-        /* Tables & Charts */
         table { width: 100%; border-collapse: collapse; }
         th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; }
         th { background-color: #f7fafc; }
-        .chart-container { position: relative; height: 200px; width: 100%; }
+        .chart-container { position: relative; height: 180px; width: 100%; }
         .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; text-shadow: 0 1px 1px rgba(0,0,0,0.15); }
         .badge-work { background: #e2e8f0; color: #1a202c; }
 
@@ -267,7 +477,6 @@
 
         .audio-widget { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; text-align: left; }
         
-        /* FOOTER FOR EXPORT / IMPORT AT COMPLETE BOTTOM */
         .footer-bottom {
             margin-top: 30px;
             padding: 15px 0;
@@ -290,7 +499,6 @@
             <h1 id="appTitle" style="margin: 0; font-size: 1.6rem;">⏱️ Ultimate Local Work & Pomodoro Dashboard</h1>
         </div>
         <div>
-            <!-- FADING LANGUAGE DROPDOWN -->
             <div class="lang-dropdown-container">
                 <button class="lang-dropdown-btn">
                     <span id="currentLangLabel">🌐 Čeština</span> ▾
@@ -303,9 +511,7 @@
         </div>
     </header>
 
-    <!-- 3-COLUMN TOP GRID (LAYOUT MATCHING IMAGE) -->
     <div class="grid-3col">
-        <!-- ROW 1, COL 1: POMODORO ENGINE -->
         <div class="card">
             <h2>🍅 Pomodoro <span id="pomoStateLabel" style="font-size:0.85rem; color:var(--purple)">Neaktivní</span></h2>
             <div id="pomoBoxContainer" class="pomodoro-box">
@@ -341,12 +547,12 @@
                     </button>
                 </div>
 
-                <!-- AUDIO & MEDIA PLAYER -->
                 <div class="audio-widget">
                     <label for="noiseSelect" style="display:block; font-weight: bold; font-size: 0.85rem; margin-bottom: 4px;" id="lblAmbient">🎧 Ambientní šum na pozadí:</label>
                     <select id="noiseSelect" onchange="handleNoiseChange()" style="width: 100%; padding: 6px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
                         <option value="none" id="optNoiseNone">Vypnuto</option>
                         <option value="white" id="optNoiseWhite">Bílý šum (Soustředění)</option>
+                        <option value="pink" id="optNoisePink">Růžový šum (Klidný relax)</option>
                         <option value="brown" id="optNoiseBrown">Hnědý šum (Hluboký klid)</option>
                     </select>
                     
@@ -354,7 +560,7 @@
                         <span style="font-size: 0.8rem; color: #475569;" id="lblNoiseVol">🔊 Hlasitost šumu:</span>
                         <span id="noiseVolPercent" style="font-size: 0.8rem; font-weight: bold; color: #2563eb;">0 %</span>
                     </div>
-                    <input type="range" id="noiseVolume" min="0" max="1" step="0.01" value="0" style="width: 100%; display: block; margin: 0; padding: 0; cursor: pointer; accent-color: #2563eb;" oninput="updateNoiseVolume(this.value)" onchange="updateNoiseVolume(this.value)">
+                    <input type="range" id="noiseVolume" min="0" max="1" step="0.01" value="0" style="width: 100%; display: block; margin: 0; padding: 0; cursor: pointer; accent-color: #2563eb;" oninput="updateNoiseVolume(this.value)">
 
                     <label for="spotifyUrlInput" style="display:block; font-weight: bold; font-size: 0.85rem; margin-top: 10px; margin-bottom: 4px;" id="lblMusicPlayer">🎵 Tvůj hudební přehrávač (YouTube / Spotify):</label>
                     <input type="text" id="spotifyUrlInput" value="https://open.spotify.com/playlist/36kAGzrdyEpF19t91zEUJN" placeholder="Vlož odkaz z YouTube nebo Spotify..." oninput="updateMediaEmbed(this.value)" onchange="updateMediaEmbed(this.value)" style="width: 100%; padding: 6px; box-sizing: border-box; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
@@ -366,7 +572,6 @@
             </div>
         </div>
 
-        <!-- ROW 1, COL 2: MANUAL WORK ENTRY -->
         <div class="card">
             <h2>✍️ <span id="lblManualWorkTitle">Ruční zápis práce</span></h2>
             <form id="workForm" onsubmit="logWorkManual(event)">
@@ -396,7 +601,6 @@
             </form>
         </div>
 
-        <!-- ROW 1, COL 3: MANUAL BREAK ENTRY -->
         <div class="card">
             <h2>☕ <span id="lblBreakTitle">Ruční zápis pauzy</span></h2>
             <form id="breakForm" onsubmit="logBreakManual(event)">
@@ -422,7 +626,6 @@
             <div id="colorManagerContainer" class="color-manager"></div>
         </div>
 
-        <!-- ROW 2, COL 1: WORK CALENDAR -->
         <div class="card">
             <h2>📅 <span id="lblCalTitle">Kalendář práce</span></h2>
             <div class="calendar-header">
@@ -433,7 +636,6 @@
             <div id="calendarGrid" class="calendar-grid"></div>
         </div>
 
-        <!-- ROW 2, COL 2: TODAY'S SUMMARY -->
         <div class="card">
             <h2>📊 <span id="lblStatsTitle">Dnešní bilance</span></h2>
             <p><span id="lblNetWork">Dnes čistá práce:</span> <strong id="statsTodayWork">0h 0m</strong></p>
@@ -445,7 +647,7 @@
                 <input type="number" id="dailyGoalInput" min="0.5" step="0.5" value="2" onchange="updateGoal()">
             </div>
             
-            <div style="background: #e2e8f0; border-radius: 8px; height: 22px; width: 100%; overflow: hidden; margin-top: 15px; position: relative; box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);">
+            <div style="background: #e2e8f0; border-radius: 8px; height: 22px; width: 100%; overflow: hidden; margin-top: 15px; position: relative; box-shadow: inset 1px 3px rgba(0,0,0,0.15);">
                 <div id="goalProgressBar" style="height: 100%; width: 0%; background-color: var(--primary); transition: width 0.4s ease-in-out, background-color 0.4s ease-in-out; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
                     0%
                 </div>
@@ -453,13 +655,12 @@
             <p id="goalStatusText" style="font-weight:bold; font-size:0.88rem; margin-top: 10px;"></p>
         </div>
 
-        <!-- ROW 2, COL 3: TOTAL PROJECT TIME & MOOD -->
         <div class="card">
             <h2>📁 <span id="lblProjSummaryTitle">Celkový čas na projektech</span></h2>
             <div style="max-height: 180px; overflow-y: auto; margin-bottom:10px;">
                 <table id="projectSummaryTable">
                     <thead>
-                        <tr><th id="thProj">Projekt</th><th id="thTime">Čas</th><th id="thMood">Prům. nálada</th></tr>
+                        <tr><th id="thProj">Projekt</th><th id="thTime">Čas</th><th id="thMood">Prům. nálada</th><th id="thAction">Akce</th></tr>
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -471,19 +672,65 @@
         </div>
     </div>
 
-    <!-- FULL WIDTH SECTIONS BELOW TOP GRID -->
     <div class="full-width-stack">
-        <!-- CHARTS SECTION -->
+        <!-- CHARTS SECTION WITH FLIP FOREST VIEW -->
         <div class="card">
             <h2>📈 <span id="lblChartsTitle">Grafické přehledy</span></h2>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
                 <div><h3 id="chart1Title">Aktivita během dne</h3><div class="chart-container"><canvas id="chartDayTime"></canvas></div></div>
                 <div><h3 id="chart2Title">Struktura přestávek</h3><div class="chart-container"><canvas id="chartBreaksType"></canvas></div></div>
-                <div><h3 id="chart3Title">Rozložení projektů</h3><div class="chart-container"><canvas id="chartProjPie"></canvas></div></div>
+                
+                <!-- FLIP CARD FOR PROJECT DISTRIBUTION & FOREST APP VIEW -->
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <h3 id="chart3Title" style="margin:0;">Rozložení projektů</h3>
+                        <button class="btn-success btn-sm" onclick="toggleForestFlip()" id="btnFlipForest" style="padding: 2px 10px; font-size: 0.78rem; background: #38a169;">🌲 Forest App View</button>
+                    </div>
+                    <div class="flip-card-container" id="projectFlipCard">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="chart-container"><canvas id="chartProjPie"></canvas></div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="forest-app-wrapper">
+                                    <div class="forest-app-header">
+                                        <div class="forest-time-tabs">
+                                            <div id="tabModeYear" class="forest-time-tab active" onclick="setForestMode('year')">Rok</div>
+                                            <div id="tabModeAll" class="forest-time-tab" onclick="setForestMode('all')">Celá doba</div>
+                                        </div>
+                                        <div class="forest-year-nav" id="forestYearNavContainer">
+                                            <button class="forest-nav-btn" onclick="changeForestYear(-1)">&lt;</button>
+                                            <span id="forestYearDisplay">2026</span>
+                                            <button class="forest-nav-btn" onclick="changeForestYear(1)">&gt;</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3D ISOMETRIC STAGE -->
+                                    <div class="forest-iso-stage">
+                                        <div class="iso-dirt-block">
+                                            <div class="iso-grass-grid" id="isoGrassGrid">
+                                                <!-- Dynamic 5x5 grid tiles -->
+                                            </div>
+                                            <div class="iso-trees-layer" id="isoTreesLayer">
+                                                <!-- Dynamic 5x5 tree cells overlay -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="forest-app-footer">
+                                        <div id="forestTotalMinutes">0 mins</div>
+                                        <div class="forest-app-stats">
+                                            <div class="forest-stat-badge" id="forestCountAlive">0 🌳</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- COMPLETE TIMELINE -->
         <div class="card">
             <h2>📜 <span id="lblTimelineTitle">Kompletní časová osa (Záznamy s intervaly Od - Do)</span></h2>
             <div style="overflow-x: auto; max-height: 350px;">
@@ -496,7 +743,6 @@
             </div>
         </div>
 
-        <!-- MOOD REFLECTION PANEL -->
         <div class="card">
             <h2>🎭 <span id="lblMoodTitle">Jak se cítíš u projektu (Mood Reflection)</span></h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
@@ -547,7 +793,6 @@
         </div>
     </div>
 
-    <!-- FOOTER WITH IMPORT/EXPORT AT THE COMPLETE BOTTOM OF THE PAGE -->
     <footer class="footer-bottom">
         <span class="storage-indicator" id="storageIndicatorText">💾 Ukládání aktivní v paměti prohlížeče (localStorage)</span>
         <div class="footer-buttons">
@@ -558,7 +803,6 @@
     </footer>
 </div>
 
-<!-- DAY DETAIL MODAL -->
 <div id="dayDetailModalOverlay" class="modal-overlay">
     <div class="modal">
         <h2 id="dayDetailModalTitle">Detail dne</h2>
@@ -576,7 +820,6 @@
 </div>
 
 <script>
-    // --- VECTOR SVG FACES MAP ---
     const vectorMoodSVGs = {
         1: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
         2: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 15.5s-1.5-1.5-4-1.5-4 1.5-4 1.5"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
@@ -600,7 +843,6 @@
         return `<span class="mood-badge-icon" style="background-color:${color};">${svg}</span>`;
     }
 
-    // --- FULL DICTIONARY FOR CZECH AND ENGLISH ---
     const dict = {
         cs: {
             appTitle: "⏱️ Ultimate Local Work & Pomodoro Dashboard",
@@ -616,6 +858,7 @@
             lblAmbient: "🎧 Ambientní šum na pozadí:",
             optNoiseNone: "Vypnuto",
             optNoiseWhite: "Bílý šum (Soustředění)",
+            optNoisePink: "Růžový šum (Klidný relax)",
             optNoiseBrown: "Hnědý šum (Hluboký klid)",
             lblNoiseVol: "🔊 Hlasitost šumu:",
             lblMusicPlayer: "🎵 Tvůj hudební přehrávač (YouTube / Spotify):",
@@ -648,11 +891,13 @@
             thProj: "Projekt",
             thTime: "Čas",
             thMood: "Prům. nálada",
+            thAction: "Akce",
             btnAddProj: "+ Přidat",
             lblChartsTitle: "Grafické přehledy",
             chart1Title: "Aktivita během dne",
             chart2Title: "Struktura přestávek",
             chart3Title: "Rozložení projektů",
+            btnFlipForest: "🌲 Forest App View",
             lblMoodHistoryTitle: "Historie pocitů a poznámek",
             thMoodDate: "Datum",
             thMoodProj: "Projekt",
@@ -685,6 +930,7 @@
             lblAmbient: "🎧 Background Ambient Noise:",
             optNoiseNone: "Off",
             optNoiseWhite: "White Noise (Focus)",
+            optNoisePink: "Pink Noise (Relaxing)",
             optNoiseBrown: "Brown Noise (Deep Calm)",
             lblNoiseVol: "🔊 Noise Volume:",
             lblMusicPlayer: "🎵 Media Player (YouTube / Spotify):",
@@ -717,17 +963,19 @@
             thProj: "Project",
             thTime: "Time",
             thMood: "Avg. Mood",
+            thAction: "Action",
             btnAddProj: "+ Add",
             lblChartsTitle: "Visual Analytics",
             chart1Title: "Daily Activity Pattern",
             chart2Title: "Break Structure",
             chart3Title: "Project Distribution",
+            btnFlipForest: "🌲 Forest App View",
             lblMoodHistoryTitle: "Mood Notes & Reflection Log",
             thMoodDate: "Date",
             thMoodProj: "Project",
             thMoodRating: "Mood",
             thMoodNote: "Note",
-            thMoodAction: "Action",
+            thMoodAction: "Actions",
             lblTimelineTitle: "Complete Timeline (Start - End Intervals)",
             thInterval: "Interval (From - To)",
             thType: "Type",
@@ -742,9 +990,9 @@
         }
     };
 
-    // --- DATA STRUCTURES & LOCALSTORAGE ---
     let data = JSON.parse(localStorage.getItem('ultimateTimeTrackerData_v4')) || {
         projects: ['Diplomová práce', 'Ostatní'],
+        completedProjects: [], 
         logs: [],       
         breaks: [],     
         dailyGoal: 2,
@@ -755,6 +1003,7 @@
     };
 
     if (!data.moodLogs) data.moodLogs = [];
+    if (!data.completedProjects) data.completedProjects = [];
     if (!data.lang) data.lang = 'cs';
 
     if (!data.breakCategories) {
@@ -769,7 +1018,6 @@
     }
 
     let selectedGaugeScore = 3;
-
     const checkTodayStr = getLocalDateString();
     if (!data.lastActiveDate) {
         data.lastActiveDate = checkTodayStr;
@@ -781,7 +1029,6 @@
     let currentCalendarDate = new Date();
     let chartD, chartB, chartP, chartDetail;
 
-    // --- POMODORO ENGINE STAVY ---
     let pomoState = 'stopped'; 
     let pomoTimerSeconds = 0;       
     let pomoPromptSeconds = 0;      
@@ -790,7 +1037,10 @@
     let pomoInterval = null;
     let isMacroBreak = false; 
 
-    // --- ANTI-SLEEP BACKGROUND WEB WORKER ---
+    // Forest view state
+    let forestViewMode = 'year'; // 'year' or 'all'
+    let forestActiveYear = new Date().getFullYear();
+
     const workerCode = `
         let timer = null;
         self.onmessage = function(e) {
@@ -815,7 +1065,6 @@
         console.warn("Worker fallback:", e);
     }
 
-    // NOISE GENERATOR
     let noiseAudioCtx = null;
     let noiseSource = null;
     let noiseGainNode = null;
@@ -826,7 +1075,36 @@
         renderAll();
     }
 
-    // CATEGORY NAME TRANSLATOR HELPER
+    function toggleForestFlip() {
+        const cardContainer = document.getElementById('projectFlipCard');
+        if (cardContainer) {
+            cardContainer.classList.toggle('flipped');
+        }
+    }
+
+    function setForestMode(mode) {
+        forestViewMode = mode;
+        const tabYear = document.getElementById('tabModeYear');
+        const tabAll = document.getElementById('tabModeAll');
+        const navContainer = document.getElementById('forestYearNavContainer');
+
+        if (mode === 'year') {
+            tabYear.classList.add('active');
+            tabAll.classList.remove('active');
+            navContainer.style.display = 'flex';
+        } else {
+            tabAll.classList.add('active');
+            tabYear.classList.remove('active');
+            navContainer.style.display = 'none';
+        }
+        renderForestIsometric();
+    }
+
+    function changeForestYear(dir) {
+        forestActiveYear += dir;
+        renderForestIsometric();
+    }
+
     function getCategoryName(key) {
         const isEn = data.lang === 'en';
         const defaultsEn = {
@@ -844,7 +1122,6 @@
         return key;
     }
 
-    // --- LANGUAGE SWITCHER ---
     function setLanguage(lang) {
         data.lang = lang;
         saveData();
@@ -861,7 +1138,6 @@
         const storageEl = document.getElementById('storageIndicatorText');
         if (storageEl) storageEl.textContent = isEn ? '💾 Auto-saving to browser local storage (localStorage)' : '💾 Ukládání aktivní v paměti prohlížeče (localStorage)';
 
-        // Placeholders
         document.getElementById('pomoTaskInput').placeholder = isEn ? 'Task description...' : 'Popis práce...';
         document.getElementById('workTaskInput').placeholder = isEn ? 'e.g. Research, writing...' : 'Např. Rešerše, psaní...';
         document.getElementById('workTimeInput').placeholder = isEn ? 'Duration' : 'Délka';
@@ -884,7 +1160,6 @@
         }
     }
 
-    // --- MOOD REFLECTION LOGIC ---
     function selectGaugeSmiley(score, btn) {
         selectedGaugeScore = score;
         document.querySelectorAll('.smiley-gauge-btn').forEach(b => b.classList.remove('selected'));
@@ -943,7 +1218,6 @@
         });
     }
 
-    // EXPORT / IMPORT DATA JSON
     function exportData() {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
         const dlAnchor = document.createElement('a');
@@ -968,6 +1242,7 @@
                 const imported = JSON.parse(evt.target.result);
                 if (imported && imported.projects && imported.logs) {
                     data = imported;
+                    if (!data.completedProjects) data.completedProjects = [];
                     saveData();
                     alert(data.lang === 'cs' ? "Data byla úspěšně importována!" : "Data successfully imported!");
                 } else {
@@ -980,17 +1255,16 @@
         reader.readAsText(file);
     }
 
-    // AUDIO & MEDIA EMBED LOGIC
     function updateNoiseVolume(val) {
         const volume = parseFloat(val) || 0;
         const percent = Math.round(volume * 100);
-
         const percentEl = document.getElementById('noiseVolPercent');
         if (percentEl) percentEl.textContent = percent + ' %';
 
         try {
-            if (window.noiseGainNode && window.noiseGainNode.gain) {
-                window.noiseGainNode.gain.value = volume;
+            if (noiseGainNode && noiseGainNode.gain && noiseAudioCtx) {
+                noiseGainNode.gain.cancelScheduledValues(noiseAudioCtx.currentTime);
+                noiseGainNode.gain.setValueAtTime(volume, noiseAudioCtx.currentTime);
             }
         } catch (err) {}
     }
@@ -1040,11 +1314,19 @@
 
     function handleNoiseChange() {
         const type = document.getElementById('noiseSelect').value;
-        if (!noiseAudioCtx) noiseAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (noiseAudioCtx.state === 'suspended') noiseAudioCtx.resume();
+        
+        if (!noiseAudioCtx) {
+            noiseAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (noiseAudioCtx.state === 'suspended') {
+            noiseAudioCtx.resume();
+        }
         
         if (noiseSource) { 
-            try { noiseSource.stop(); noiseSource.disconnect(); } catch(e){} 
+            try { 
+                noiseSource.stop(); 
+                noiseSource.disconnect(); 
+            } catch(e){} 
             noiseSource = null; 
         }
 
@@ -1054,12 +1336,26 @@
         let noiseBuffer = noiseAudioCtx.createBuffer(1, bufferSize, noiseAudioCtx.sampleRate);
         let output = noiseBuffer.getChannelData(0);
         
-        let lastOut = 0.0;
-        for (let i = 0; i < bufferSize; i++) {
-            let white = Math.random() * 2 - 1;
-            if (type === 'white') {
-                output[i] = white;
-            } else if (type === 'brown') {
+        if (type === 'white') {
+            for (let i = 0; i < bufferSize; i++) { output[i] = Math.random() * 2 - 1; }
+        } else if (type === 'pink') {
+            let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+            for (let i = 0; i < bufferSize; i++) {
+                let white = Math.random() * 2 - 1;
+                b0 = 0.99886 * b0 + white * 0.0555179;
+                b1 = 0.99332 * b1 + white * 0.0750759;
+                b2 = 0.96900 * b2 + white * 0.1538520;
+                b3 = 0.86650 * b3 + white * 0.3104856;
+                b4 = 0.55000 * b4 + white * 0.5329522;
+                b5 = -0.7616 * b5 - white * 0.0168980;
+                output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+                output[i] *= 0.11;
+                b6 = white * 0.115926;
+            }
+        } else if (type === 'brown') {
+            let lastOut = 0.0;
+            for (let i = 0; i < bufferSize; i++) {
+                let white = Math.random() * 2 - 1;
                 output[i] = (lastOut + (0.02 * white)) / 1.02;
                 lastOut = output[i];
                 output[i] *= 3.5; 
@@ -1076,6 +1372,7 @@
         }
         
         let vol = parseFloat(document.getElementById('noiseVolume').value) || 0;
+        noiseGainNode.gain.cancelScheduledValues(noiseAudioCtx.currentTime);
         noiseGainNode.gain.setValueAtTime(vol, noiseAudioCtx.currentTime);
 
         noiseSource.connect(noiseGainNode);
@@ -1104,7 +1401,6 @@
         } catch(e) { console.error("Audio error:", e); }
     }
 
-    // POMODORO ENGINE LOGIC
     function changePomoConfig() {
         if (pomoState !== 'stopped') {
             alert(data.lang === 'en' ? "Please reset running timer before changing mode." : "Před změnou režimu resetujte běžící časovač.");
@@ -1405,7 +1701,6 @@
             `Akumulovaná práce do makro pauzy: ${data.macroAccumulated} / 120 min`;
     }
 
-    // MANUAL LOGGING
     function logWorkManual(e) {
         e.preventDefault();
         const project = document.getElementById('workProjectSelect').value;
@@ -1449,6 +1744,28 @@
         if (name && !data.projects.includes(name)) { data.projects.push(name); input.value = ''; saveData(); }
     }
 
+    function completeProject(projectName) {
+        const isEn = data.lang === 'en';
+        if (data.projects.length <= 1) {
+            alert(isEn ? "You must keep at least one active project." : "Musíte mít v seznamu alespoň jeden aktivní projekt.");
+            return;
+        }
+
+        const totalMins = data.logs.filter(l => l.project === projectName).reduce((sum, l) => sum + l.duration, 0);
+
+        if (confirm(isEn ? `Mark project "${projectName}" as completed? It will plant a tree in your Forest landscape!` : `Označit projekt "${projectName}" jako dokončený? Zasaď strom do svého lesa!`)) {
+            data.completedProjects.push({
+                id: Date.now(),
+                name: projectName,
+                totalMinutes: totalMins,
+                completedDate: getLocalDateString()
+            });
+
+            data.projects = data.projects.filter(p => p !== projectName);
+            saveData();
+        }
+    }
+
     function addNewBreakCategory() {
         const input = document.getElementById('newBreakCategoryName'); const name = input.value.trim();
         if (name && !data.breakCategories[name]) {
@@ -1479,7 +1796,154 @@
 
     function moveMonth(dir) { currentCalendarDate.setMonth(currentCalendarDate.getMonth() + dir); renderCalendar(); }
 
-    // --- WORK CALENDAR WITH AVERAGE MOOD GAUGE OVERVIEW ---
+    // --- HIGH-DETAIL VECTOR PLANT & TREE GENERATOR ---
+    function getCustomPlantSVG(hours) {
+        if (hours < 2) {
+            // 1. Sazenice / Malá vyklíčená rostlinka v hlíně (detailní květináč/hrouda)
+            return `
+            <svg class="iso-tree-svg" viewBox="0 0 50 60">
+                <ellipse cx="25" cy="52" rx="14" ry="5" fill="#3d2312" opacity="0.8" />
+                <path d="M 18 50 Q 25 44 32 50 L 29 42 L 21 42 Z" fill="#654321" />
+                <path d="M 25 43 Q 24 30 26 22" stroke="#365314" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                <!-- Detailní lístky -->
+                <path d="M 25 32 C 16 28, 12 18, 22 24 C 24 25, 25 28, 25 32 Z" fill="#84cc16" stroke="#3f6212" stroke-width="0.8" />
+                <path d="M 26 27 C 34 23, 38 13, 28 19 C 26 20, 26 24, 26 27 Z" fill="#a3e635" stroke="#3f6212" stroke-width="0.8" />
+                <circle cx="25" cy="20" r="2.5" fill="#ec4899" />
+            </svg>`;
+        } else if (hours < 10) {
+            // 2. Propracovaný listnatý strom s texturou kmene a více vrstvami koruny
+            return `
+            <svg class="iso-tree-svg" viewBox="0 0 50 65">
+                <ellipse cx="25" cy="58" rx="13" ry="5" fill="#2d170b" opacity="0.6" />
+                <!-- Kmen s texturou -->
+                <path d="M 22 58 L 22 35 Q 22 30 25 26 Q 28 30 28 35 L 28 58 Z" fill="#5c3a21" />
+                <path d="M 24 50 L 24 35" stroke="#3d2312" stroke-width="1.2" stroke-dasharray="2,2" />
+                <!-- Bohatá koruna - vrstvená -->
+                <circle cx="25" cy="24" r="16" fill="#4ade80" />
+                <circle cx="17" cy="22" r="11" fill="#22c55e" />
+                <circle cx="33" cy="21" r="11" fill="#16a34a" />
+                <circle cx="25" cy="15" r="10" fill="#86efac" />
+                <!-- Světelné odlesky -->
+                <circle cx="21" cy="18" r="4" fill="#bbf7d0" opacity="0.6" />
+                <circle cx="30" cy="16" r="3" fill="#bbf7d0" opacity="0.4" />
+            </svg>`;
+        } else if (hours < 25) {
+            // 3. Detailní jehličnan / Vysoký smrk s patry
+            return `
+            <svg class="iso-tree-svg" viewBox="0 0 50 70">
+                <ellipse cx="25" cy="62" rx="12" ry="4" fill="#2d170b" opacity="0.6" />
+                <rect x="23" y="44" width="4" height="18" rx="1" fill="#422a1d" />
+                <!-- Vrstvené větve jehličnanu -->
+                <polygon points="25,8 41,32 32,32 44,48 6,48 18,32 9,32" fill="#15803d" stroke="#052e16" stroke-width="0.8" />
+                <polygon points="25,18 37,36 30,36 39,52 11,52 20,36 13,36" fill="#16a34a" opacity="0.85" />
+                <polygon points="25,8 37,32 25,28" fill="#4ade80" opacity="0.35" />
+            </svg>`;
+        } else if (hours < 50) {
+            // 4. Kvetoucí třešeň / Sakura s větvenou korunou a květy
+            return `
+            <svg class="iso-tree-svg" viewBox="0 0 50 70">
+                <ellipse cx="25" cy="62" rx="14" ry="5" fill="#2d170b" opacity="0.6" />
+                <!-- Detailní rozvětvený kmen -->
+                <path d="M 21 62 L 23 40 Q 20 30 14 24 M 23 40 Q 28 32 35 25 M 23 40 L 26 22" stroke="#422a1d" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                <!-- Koruna z květů -->
+                <circle cx="25" cy="20" r="17" fill="#f472b6" />
+                <circle cx="15" cy="22" r="11" fill="#f43f5e" />
+                <circle cx="35" cy="20" r="12" fill="#fb7185" />
+                <circle cx="25" cy="11" r="10" fill="#fbcfe8" />
+                <!-- Detaily květů / tečky -->
+                <circle cx="21" cy="16" r="2" fill="#ffffff" opacity="0.8" />
+                <circle cx="30" cy="15" r="2" fill="#ffffff" opacity="0.8" />
+                <circle cx="25" cy="24" r="2" fill="#ffffff" opacity="0.8" />
+                <circle cx="14" cy="24" r="1.5" fill="#ffffff" opacity="0.8" />
+                <circle cx="33" cy="23" r="1.5" fill="#ffffff" opacity="0.8" />
+            </svg>`;
+        } else {
+            // 5. Prastorý obří lesní strom s mohutnými kořeny a detailní korunou
+            return `
+            <svg class="iso-tree-svg" viewBox="0 0 55 75">
+                <ellipse cx="27.5" cy="67" rx="18" ry="6" fill="#1e0e06" opacity="0.7" />
+                <path d="M 20 67 C 20 50, 23 42, 23 35 L 32 35 C 32 42, 35 50, 35 67 Z" fill="#3b2219" />
+                <path d="M 23 58 C 17 62, 12 65, 10 66" stroke="#3b2219" stroke-width="4" stroke-linecap="round" fill="none" />
+                <path d="M 32 58 C 38 62, 43 65, 45 66" stroke="#3b2219" stroke-width="4" stroke-linecap="round" fill="none" />
+                <!-- Obří koruna -->
+                <circle cx="27.5" cy="25" r="22" fill="#14532d" />
+                <circle cx="15" cy="27" r="15" fill="#166534" />
+                <circle cx="40" cy="25" r="15" fill="#15803d" />
+                <circle cx="27.5" cy="12" r="14" fill="#22c55e" />
+                <circle cx="22" cy="18" r="7" fill="#4ade80" opacity="0.7" />
+                <circle cx="34" cy="17" r="7" fill="#4ade80" opacity="0.7" />
+            </svg>`;
+        }
+    }
+
+    function renderForestIsometric() {
+        const gridContainer = document.getElementById('isoGrassGrid');
+        const treesContainer = document.getElementById('isoTreesLayer');
+        if (!gridContainer || !treesContainer) return;
+        
+        gridContainer.innerHTML = '';
+        treesContainer.innerHTML = '';
+
+        document.getElementById('forestYearDisplay').textContent = forestActiveYear;
+
+        let filteredProjects = data.completedProjects || [];
+        if (forestViewMode === 'year') {
+            filteredProjects = filteredProjects.filter(p => {
+                const yearPart = p.completedDate ? p.completedDate.split('-')[0] : '';
+                return parseInt(yearPart, 10) === forestActiveYear;
+            });
+        }
+
+        let totalMinsAll = 0;
+        filteredProjects.forEach(p => { totalMinsAll += p.totalMinutes; });
+
+        const tileSlots = Array(25).fill(null);
+        const scatteredIndices = [12, 6, 18, 8, 16, 2, 22, 10, 14, 0, 24, 4, 20, 7, 17, 1, 23, 11, 13, 3, 21, 5, 19, 9, 15];
+
+        filteredProjects.forEach((tree, idx) => {
+            if (idx < 25) {
+                const slotIndex = scatteredIndices[idx];
+                tileSlots[slotIndex] = tree;
+            }
+        });
+
+        for (let i = 0; i < 25; i++) {
+            const tile = document.createElement('div');
+            tile.className = 'iso-tile';
+            gridContainer.appendChild(tile);
+        }
+
+        tileSlots.forEach((tree) => {
+            const cell = document.createElement('div');
+            cell.className = 'iso-tree-cell';
+
+            if (tree) {
+                const hours = tree.totalMinutes / 60;
+                let treeTypeName = data.lang === 'en' ? 'Sapling' : 'Mladá sazenice';
+
+                if (hours >= 50) treeTypeName = data.lang === 'en' ? 'Ancient Giant Tree' : 'Prastarý obr';
+                else if (hours >= 25) treeTypeName = data.lang === 'en' ? 'Blooming Tree' : 'Kvetoucí strom';
+                else if (hours >= 10) treeTypeName = data.lang === 'en' ? 'Pine Tree' : 'Vysoký smrk';
+                else if (hours >= 2) treeTypeName = data.lang === 'en' ? 'Deciduous Tree' : 'Listnatý strom';
+
+                const totalTimeStr = hours >= 1 ? `${hours.toFixed(1)} ${data.lang === 'en' ? 'hours' : 'hodin'}` : `${tree.totalMinutes} ${data.lang === 'en' ? 'minutes' : 'minut'}`;
+                const tooltipText = `Projekt: ${tree.name}\nTyp: ${treeTypeName}\nČas: ${totalTimeStr}\nDokončeno: ${tree.completedDate}`;
+
+                const treeObj = document.createElement('div');
+                treeObj.className = 'iso-tree-object';
+                treeObj.title = tooltipText;
+                treeObj.innerHTML = getCustomPlantSVG(hours);
+
+                cell.appendChild(treeObj);
+            }
+
+            treesContainer.appendChild(cell);
+        });
+
+        document.getElementById('forestTotalMinutes').textContent = `${totalMinsAll} mins`;
+        document.getElementById('forestCountAlive').textContent = `${filteredProjects.length} 🌳`;
+    }
+
     function renderCalendar() {
         const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth();
         const monthNames = data.lang === 'cs' ? 
@@ -1515,7 +1979,6 @@
                 cell.appendChild(tb);
             }
 
-            // SHOW AVERAGE MOOD OF ALL NOTED MOODS FOR THIS DAY
             if (dayMoods.length > 0) {
                 let avgScore = Math.round(dayMoods.reduce((sum, m) => sum + m.score, 0) / dayMoods.length);
                 let moodDiv = document.createElement('div');
@@ -1528,7 +1991,6 @@
         }
     }
 
-    // --- DAY DETAIL MODAL: LIST ALL MOOD ENTRIES ---
     function openDayDetailModal(dateStr) {
         const modal = document.getElementById('dayDetailModalOverlay');
         const title = document.getElementById('dayDetailModalTitle');
@@ -1734,10 +2196,10 @@
         });
     }
 
-    // --- RENDER ALL COMPONENTS ---
     function renderAll() {
         applyTranslations();
         renderMoodHistory();
+        renderForestIsometric();
 
         const todayStr = getLocalDateString();
         const isEn = data.lang === 'en';
@@ -1772,7 +2234,6 @@
         document.getElementById('statsTodayExplicitBreaks').textContent = `${todayExplicitBreakMins} min`;
         document.getElementById('statsTodayAutoBreaks').textContent = `${autoBreakMins} min`;
 
-        // Progress bar
         document.getElementById('dailyGoalInput').value = data.dailyGoal;
         const targetMins = data.dailyGoal * 60; const goalStatusEl = document.getElementById('goalStatusText');
         const progressBarEl = document.getElementById('goalProgressBar');
@@ -1797,7 +2258,6 @@
                 `🚀 Skvělý výkon! Limit překonán o: <span style="color: var(--purple)">${Math.floor(over/60)}h ${over%60}m</span>`;
         }
 
-        // TOTAL PROJECT TIME & MOOD TABLE
         const projTotals = {}; data.projects.forEach(p => projTotals[p] = 0);
         data.logs.forEach(l => { if (projTotals[l.project] !== undefined) projTotals[l.project] += l.duration; });
 
@@ -1821,7 +2281,14 @@
                 badgeHtml = getMoodBadgeHTML(parseFloat(moodVal));
             }
 
-            tr.innerHTML = `<td><strong>${p}</strong></td><td>${Math.floor(projTotals[p]/60)}h ${projTotals[p]%60}m</td><td>${badgeHtml} ${moodVal}</td>`;
+            tr.innerHTML = `
+                <td><strong>${p}</strong></td>
+                <td>${Math.floor(projTotals[p]/60)}h ${projTotals[p]%60}m</td>
+                <td>${badgeHtml} ${moodVal}</td>
+                <td>
+                    <button class="btn-success btn-sm" style="padding: 2px 6px; font-size: 0.75rem;" onclick="completeProject('${p}')">🌳 Dokončit</button>
+                </td>
+            `;
             projTbody.appendChild(tr);
         }
 
@@ -1831,7 +2298,6 @@
         renderCharts(projTotals, autoBreakMins);
     }
 
-    // CHART.JS INITIALIZATION
     function renderCharts(projTotals, currentAutoBreak) {
         if(chartD) chartD.destroy(); if(chartB) chartB.destroy(); if(chartP) chartP.destroy();
 
