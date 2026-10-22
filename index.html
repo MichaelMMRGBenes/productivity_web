@@ -94,103 +94,38 @@
         .btn-success:hover { background-color: #2f855a; }
         .btn-sm { width: auto !important; padding: 6px 12px !important; font-size: 0.8rem !important; }
         
-        .lang-dropdown-container {
-            position: relative;
-            display: inline-block;
-        }
+        .lang-dropdown-container { position: relative; display: inline-block; }
         .lang-dropdown-btn {
-            background: #ffffff;
-            color: var(--text-color);
-            border: 1px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
+            background: #ffffff; color: var(--text-color); border: 1px solid var(--border);
+            padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
+            display: flex; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: all 0.2s ease;
         }
-        .lang-dropdown-btn:hover {
-            border-color: var(--primary);
-            background: #f8fafc;
-        }
+        .lang-dropdown-btn:hover { border-color: var(--primary); background: #f8fafc; }
         .lang-dropdown-menu {
-            position: absolute;
-            top: calc(100% + 6px);
-            right: 0;
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-            min-width: 140px;
-            padding: 6px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-8px);
-            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
-            z-index: 1000;
+            position: absolute; top: calc(100% + 6px); right: 0; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+            min-width: 140px; padding: 6px; opacity: 0; visibility: hidden; transform: translateY(-8px);
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; z-index: 1000;
         }
-        .lang-dropdown-container:hover .lang-dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+        .lang-dropdown-container:hover .lang-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
         .lang-option {
-            background: transparent;
-            color: var(--text-color);
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            width: 100%;
-            text-align: left;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.15s;
+            background: transparent; color: var(--text-color); border: none; padding: 8px 12px;
+            border-radius: 6px; width: 100%; text-align: left; font-size: 0.85rem; cursor: pointer;
+            display: flex; align-items: center; gap: 8px; transition: background 0.15s;
         }
-        .lang-option:hover {
-            background: #edf2f7;
-            color: var(--primary);
-        }
+        .lang-option:hover { background: #edf2f7; color: var(--primary); }
 
         .smiley-selector-gauge {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            background: #f8fafc;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+            background: #f8fafc; padding: 10px; border-radius: 12px; border: 1px solid var(--border);
         }
         .smiley-gauge-btn {
-            background: #ffffff;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 4px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%;
-            box-sizing: border-box;
+            background: #ffffff; border: 2px solid var(--border); border-radius: 10px; padding: 10px 4px;
+            cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 100%; box-sizing: border-box;
         }
-        .smiley-gauge-btn svg {
-            width: 30px;
-            height: 30px;
-            transition: transform 0.2s ease;
-        }
-        .smiley-gauge-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+        .smiley-gauge-btn svg { width: 30px; height: 30px; transition: transform 0.2s ease; }
+        .smiley-gauge-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .smiley-gauge-btn[data-score="1"].selected { border-color: var(--mood-1); background: #fef2f2; }
         .smiley-gauge-btn[data-score="2"].selected { border-color: var(--mood-2); background: #fff7ed; }
         .smiley-gauge-btn[data-score="3"].selected { border-color: var(--mood-3); background: #fefce8; }
@@ -198,229 +133,162 @@
         .smiley-gauge-btn[data-score="5"].selected { border-color: var(--mood-5); background: #f0fdf4; }
 
         .mood-badge-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            color: white;
-            vertical-align: middle;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 22px; height: 22px; border-radius: 50%; color: white; vertical-align: middle;
         }
         .mood-badge-icon svg { width: 15px; height: 15px; stroke: #ffffff; }
 
-        /* --- FLIP CARD & FOREST APP STYLING --- */
+        /* --- FLIP CARD & POLADĚNÝ DESIGN FOREST VIEW --- */
         .flip-card-container {
             perspective: 1200px;
             width: 100%;
             height: 500px;
         }
         .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
-            transform-style: preserve-3d;
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d;
         }
-        .flip-card-container.flipped .flip-card-inner {
-            transform: rotateY(180deg);
-        }
+        .flip-card-container.flipped .flip-card-inner { transform: rotateY(180deg); }
         .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;
         }
         .flip-card-back {
-            background: radial-gradient(circle at center, #183329 0%, #0d1b15 100%);
-            color: #ffffff;
-            transform: rotateY(180deg);
-            padding: 20px;
-            border: 2px solid #234737;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
-            overflow: hidden;
+            background: radial-gradient(circle at center, #1b382d 0%, #09130e 100%);
+            color: #ffffff; transform: rotateY(180deg); padding: 20px;
+            border: 2px solid #234737; box-shadow: inset 0 0 50px rgba(0,0,0,0.8); overflow: hidden;
         }
 
-        /* Forest App Specific Layout */
         .forest-app-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            height: 100%;
-            width: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: space-between; height: 100%; width: 100%;
         }
         .forest-app-header {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
+            width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px;
         }
         .forest-time-tabs {
-            display: flex;
-            background: #09130e;
-            border-radius: 10px;
-            padding: 4px;
-            border: 1px solid #234737;
+            display: flex; background: rgba(5, 12, 9, 0.7); border-radius: 12px; padding: 4px;
+            border: 1px solid #234737; backdrop-filter: blur(4px);
         }
         .forest-time-tab {
-            padding: 5px 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #a7f3d0;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            padding: 6px 22px; font-size: 0.85rem; font-weight: 600; color: #a7f3d0;
+            border-radius: 8px; cursor: pointer; transition: all 0.25s ease;
         }
         .forest-time-tab.active {
-            background: #ffffff;
-            color: #0d1b15;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            background: #ffffff; color: #0d1b15; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         .forest-year-nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 1.05rem;
-            letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 20px; color: #ffffff;
+            font-weight: bold; font-size: 1.05rem; letter-spacing: 0.5px;
         }
         .forest-nav-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #234737;
-            border-radius: 6px;
-            color: #a7f3d0;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            padding: 2px 12px;
-            transition: background 0.2s;
+            background: rgba(255,255,255,0.08); border: 1px solid #234737; border-radius: 6px;
+            color: #a7f3d0; cursor: pointer; font-size: 1rem; font-weight: bold; padding: 2px 12px; transition: all 0.2s;
         }
-        .forest-nav-btn:hover { background: rgba(255,255,255,0.15); color: #ffffff; }
+        .forest-nav-btn:hover { background: rgba(255,255,255,0.2); color: #ffffff; }
 
-        /* 3D ISOMETRIC STAGE & LANDSCAPE */
+        /* 3D ISOMETRIC STAGE & DLAŽDICOVÝ LES */
         .forest-iso-stage {
-            width: 100%;
-            height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: visible;
+            width: 100%; height: 280px; display: flex; align-items: center;
+            justify-content: center; position: relative; overflow: visible;
         }
         .iso-dirt-block {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            transform: rotateX(55deg) rotateZ(-45deg);
-            transform-style: preserve-3d;
-            overflow: visible;
+            position: relative; width: 230px; height: 230px;
+            transform: rotateX(55deg) rotateZ(-45deg); transform-style: preserve-3d;
+            animation: floatIsland 5s ease-in-out infinite alternate;
+        }
+        @keyframes floatIsland {
+            0% { transform: rotateX(55deg) rotateZ(-45deg) translateZ(0px); }
+            100% { transform: rotateX(55deg) rotateZ(-45deg) translateZ(6px); }
         }
         .iso-dirt-block::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, #7c4d2b 0%, #4e2e18 100%);
-            transform: translateZ(-26px);
-            border-radius: 6px;
-            box-shadow: -20px 20px 0 #3d2312, -35px 35px 25px rgba(0,0,0,0.75);
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #85532f 0%, #472813 100%);
+            transform: translateZ(-28px); border-radius: 8px;
+            box-shadow: -22px 22px 0 #331c0d, -40px 40px 30px rgba(0,0,0,0.8);
         }
         .iso-grass-grid {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: #5d9e2b;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 2px;
-            padding: 3px;
-            border-radius: 6px;
-            border: 2px solid #488020;
-            box-sizing: border-box;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-            transform-style: preserve-3d;
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: #3e6b18; display: grid; grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr); gap: 2px; padding: 3px; border-radius: 8px;
+            border: 2px solid #2c4e10; box-sizing: border-box;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.4); transform-style: preserve-3d;
         }
         .iso-tile {
-            background: linear-gradient(135deg, #7bc638 0%, #68a82d 100%);
-            border-radius: 3px;
-            position: relative;
+            background: linear-gradient(135deg, #74be31 0%, #5d9b26 100%);
+            border-radius: 3px; position: relative; box-shadow: inset 0 1px 2px rgba(255,255,255,0.25);
+            transform-style: preserve-3d;
         }
         .iso-tile:nth-child(even) { 
-            background: linear-gradient(135deg, #71b832 0%, #5d9829 100%); 
+            background: linear-gradient(135deg, #6aa92b 0%, #528a20 100%); 
         }
 
-        /* HIGH-DETAIL VECTOR TREES & PLANTS LAYER */
-        .iso-trees-layer {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 2px;
-            padding: 3px;
-            pointer-events: none;
-            transform-style: preserve-3d;
-            transform: translateZ(3px);
-        }
-        .iso-tree-cell {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: auto;
-        }
         .iso-tree-object {
-            transform: rotateZ(45deg) rotateX(-55deg) scaleY(1.7) translateY(-38%);
+            position: absolute;
+            left: 50%; bottom: 50%;
+            width: 52px; height: 72px;
+            transform: translate(-50%, 50%) rotateZ(45deg) rotateX(-55deg) scaleY(1.55);
             transform-origin: center bottom;
-            width: 44px;
-            height: 56px;
-            cursor: pointer;
+            cursor: pointer; pointer-events: auto;
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            filter: drop-shadow(0px 10px 5px rgba(0,0,0,0.5));
+            display: flex; align-items: flex-end; justify-content: center;
+            filter: drop-shadow(-3px 12px 6px rgba(0,0,0,0.65));
             user-select: none;
         }
         .iso-tree-object:hover {
-            transform: rotateZ(45deg) rotateX(-55deg) scaleY(1.7) translateY(-45%) scale(1.25);
-            filter: drop-shadow(0px 15px 8px rgba(0,0,0,0.75));
+            transform: translate(-50%, 50%) rotateZ(45deg) rotateX(-55deg) scaleY(1.55) translateY(-15%) scale(1.25);
+            filter: drop-shadow(-5px 18px 10px rgba(0,0,0,0.85));
+            z-index: 100 !important;
         }
-        .iso-tree-svg {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-        }
+        .iso-tree-svg { width: 100%; height: 100%; overflow: visible; }
 
         .forest-app-footer {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #ffffff;
-            font-size: 0.95rem;
-            font-weight: bold;
-            padding: 0 5px;
-            box-sizing: border-box;
+            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            color: #ffffff; font-size: 0.95rem; font-weight: bold; padding: 0 5px; box-sizing: border-box;
         }
         .forest-stat-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(0,0,0,0.45);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: #a7f3d0;
-            border: 1px solid #234737;
+            display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.5);
+            padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; color: #a7f3d0; border: 1px solid #234737;
+        }
+
+        /* TIMELINE TRACK S ČASEM NA POZICI ROZHRANÍ DOLE */
+        .visual-timeline-track {
+            position: relative; height: 52px; background: #cbd5e1; border-radius: 8px;
+            margin: 15px 0 5px 0; overflow: visible; border: 2px solid #94a3b8; user-select: none; cursor: pointer;
+        }
+        .timeline-segment-block {
+            position: absolute; top: 4px; height: 44px; color: white; border-radius: 6px;
+            font-size: 0.75rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between;
+            cursor: grab; box-shadow: 0 2px 5px rgba(0,0,0,0.2); overflow: hidden;
+            box-sizing: border-box; text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .timeline-segment-block:active { cursor: grabbing; }
+        .segment-label-text {
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; flex: 1; text-align: center;
+        }
+        .resize-handle {
+            width: 14px; height: 100%; background: rgba(0, 0, 0, 0.25); cursor: ew-resize;
+            display: flex; align-items: center; justify-content: center; font-size: 10px;
+            user-select: none; transition: background 0.2s; flex-shrink: 0; position: relative;
+        }
+        .resize-handle:hover { background: rgba(0, 0, 0, 0.5); }
+
+        /* Kontejner pro spodní osu s časy (začátek, rozhraní bloků, konec) */
+        .timeline-bottom-time-bar {
+            position: relative;
+            width: 100%;
+            height: 20px;
+            margin-top: 4px;
+            font-size: 0.78rem;
+            font-weight: bold;
+            color: #475569;
+            user-select: none;
+        }
+        .bottom-time-mark {
+            position: absolute;
+            top: 0;
+            transform: translateX(-50%);
+            white-space: nowrap;
         }
 
         .pomodoro-box { text-align: center; padding: 15px; background: #edf2f7; border-radius: 8px; transition: all 0.3s ease; }
@@ -439,17 +307,9 @@
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
         .calendar-day-name { font-weight: bold; font-size: 0.75rem; color: #718096; padding: 4px 0; }
         .calendar-cell { 
-            background: #f7fafc; 
-            border: 1px solid #e2e8f0; 
-            min-height: 52px; 
-            border-radius: 6px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            padding: 4px; 
-            font-size: 0.78rem; 
-            cursor: pointer;
-            transition: all 0.2s;
+            background: #f7fafc; border: 1px solid #e2e8f0; min-height: 52px; border-radius: 6px; 
+            display: flex; flex-direction: column; justify-content: space-between; padding: 4px; 
+            font-size: 0.78rem; cursor: pointer; transition: all 0.2s;
         }
         .calendar-cell:hover { border-color: var(--primary); background: #edf2f7; transform: translateY(-2px); }
         .calendar-cell.has-work { background: #ebf8ff; border-color: #bee3f8; }
@@ -472,20 +332,14 @@
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 2000; visibility: hidden; opacity: 0; transition: all 0.2s; }
         .modal-overlay.active { visibility: visible; opacity: 1; }
-        .modal { background: var(--card-bg); padding: 20px; border-radius: 10px; width: 550px; max-width: 92%; box-shadow: 0 10px 25px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto; }
+        .modal { background: var(--card-bg); padding: 20px; border-radius: 10px; width: 620px; max-width: 92%; box-shadow: 0 10px 25px rgba(0,0,0,0.15); max-height: 90vh; overflow-y: auto; }
         .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
 
         .audio-widget { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; text-align: left; }
         
         .footer-bottom {
-            margin-top: 30px;
-            padding: 15px 0;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            margin-top: 30px; padding: 15px 0; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
         }
         .storage-indicator { font-size: 0.8rem; color: #059669; font-weight: bold; background: #d1fae5; padding: 4px 10px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px; }
         .footer-buttons { display: flex; gap: 10px; }
@@ -504,8 +358,8 @@
                     <span id="currentLangLabel">🌐 Čeština</span> ▾
                 </button>
                 <div class="lang-dropdown-menu">
-                    <button class="lang-option" onclick="setLanguage('cs')">Čeština</button>
-                    <button class="lang-option" onclick="setLanguage('en')">English</button>
+                    <button class="lang-option" onclick="setLanguage('cs')">🇨🇿 Čeština</button>
+                    <button class="lang-option" onclick="setLanguage('en')">🇬🇧 English</button>
                 </div>
             </div>
         </div>
@@ -591,7 +445,7 @@
                 </div>
                 <div class="form-group">
                     <label for="workTaskInput" id="lblWorkTask">Co se dělalo (úkol):</label>
-                    <input type="text" id="workTaskInput" required placeholder="Např. Rešerše, psaní...">
+                    <input type="text" id="workTaskInput" placeholder="Nepovinný popis (např. Rešerše...)">
                 </div>
                 <div class="form-group">
                     <label for="workTimestampInput" id="lblWorkTime">Kdy to skončilo:</label>
@@ -673,14 +527,12 @@
     </div>
 
     <div class="full-width-stack">
-        <!-- CHARTS SECTION WITH FLIP FOREST VIEW -->
         <div class="card">
             <h2>📈 <span id="lblChartsTitle">Grafické přehledy</span></h2>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
                 <div><h3 id="chart1Title">Aktivita během dne</h3><div class="chart-container"><canvas id="chartDayTime"></canvas></div></div>
                 <div><h3 id="chart2Title">Struktura přestávek</h3><div class="chart-container"><canvas id="chartBreaksType"></canvas></div></div>
                 
-                <!-- FLIP CARD FOR PROJECT DISTRIBUTION & FOREST APP VIEW -->
                 <div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                         <h3 id="chart3Title" style="margin:0;">Rozložení projektů</h3>
@@ -705,15 +557,9 @@
                                         </div>
                                     </div>
 
-                                    <!-- 3D ISOMETRIC STAGE -->
                                     <div class="forest-iso-stage">
                                         <div class="iso-dirt-block">
-                                            <div class="iso-grass-grid" id="isoGrassGrid">
-                                                <!-- Dynamic 5x5 grid tiles -->
-                                            </div>
-                                            <div class="iso-trees-layer" id="isoTreesLayer">
-                                                <!-- Dynamic 5x5 tree cells overlay -->
-                                            </div>
+                                            <div class="iso-grass-grid" id="isoGrassGrid"></div>
                                         </div>
                                     </div>
 
@@ -819,7 +665,32 @@
     </div>
 </div>
 
+<div id="splitModalOverlay" class="modal-overlay">
+    <div class="modal">
+        <h2 id="lblSplitTitle">Grafické rozdělení volného času</h2>
+        <p id="lblSplitSub" style="color: #4a5568; font-size: 0.85rem; margin-bottom: 5px;">
+            💡 Tažením za tělo segment posunete. Tažením za levý/pravý okraj ║ roztáhnete úsek. Na spodní ose vidíte přesný čas rozhraní.
+        </p>
+        
+        <div id="splitTimelineTrack" class="visual-timeline-track" onclick="handleTimelineTrackClick(event)"></div>
+        <div id="timelineBottomTimeBar" class="timeline-bottom-time-bar"></div>
+
+        <button type="button" class="btn-secondary" onclick="addNewVisualSegment()" style="margin-top: 12px; font-size:0.85rem; padding:8px;" id="btnAddSegment">+ Přidat nový úsek v grafu</button>
+
+        <div id="visualSegmentsList" style="margin-top:15px; max-height:160px; overflow-y:auto;"></div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn-secondary" onclick="closeModal()" style="width:auto;" id="btnCancelSplit">Zrušit</button>
+            <button type="button" onclick="saveVisualSplitSegments()" style="width:auto;" id="btnSaveSplit">Uložit úseky</button>
+        </div>
+    </div>
+</div>
+
 <script>
+    const segmentColorsPalette = [
+        '#3182ce', '#38a169', '#dd6b20', '#805ad5', '#ec4899', '#0d9488', '#e11d48', '#2563eb', '#059669', '#d97706'
+    ];
+
     const vectorMoodSVGs = {
         1: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
         2: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 15.5s-1.5-1.5-4-1.5-4 1.5-4 1.5"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
@@ -898,6 +769,8 @@
             chart2Title: "Struktura přestávek",
             chart3Title: "Rozložení projektů",
             btnFlipForest: "🌲 Forest App View",
+            tabModeYear: "Rok",
+            tabModeAll: "Celá doba",
             lblMoodHistoryTitle: "Historie pocitů a poznámek",
             thMoodDate: "Datum",
             thMoodProj: "Projekt",
@@ -914,7 +787,12 @@
             exportBtn: "📥 Export JSON",
             importBtn: "📤 Import JSON",
             lblDayChartTitle: "Hodinová aktivita v tento den:",
-            btnCloseModal: "Zavřít"
+            btnCloseModal: "Zavřít",
+            lblSplitTitle: "Grafické rozdělení volného času",
+            lblSplitSub: "💡 Tažením za tělo segment posunete. Tažením za levý/pravý okraj ║ roztáhnete úsek. Na spodní ose vidíte přesný čas rozhraní.",
+            btnAddSegment: "+ Přidat nový úsek v grafu",
+            btnCancelSplit: "Zrušit",
+            btnSaveSplit: "Uložit úseky"
         },
         en: {
             appTitle: "⏱️ Ultimate Local Work & Pomodoro Dashboard",
@@ -970,6 +848,8 @@
             chart2Title: "Break Structure",
             chart3Title: "Project Distribution",
             btnFlipForest: "🌲 Forest App View",
+            tabModeYear: "Year",
+            tabModeAll: "All Time",
             lblMoodHistoryTitle: "Mood Notes & Reflection Log",
             thMoodDate: "Date",
             thMoodProj: "Project",
@@ -986,7 +866,12 @@
             exportBtn: "📥 Export JSON",
             importBtn: "📤 Import JSON",
             lblDayChartTitle: "Hourly Activity for this Day:",
-            btnCloseModal: "Close"
+            btnCloseModal: "Close",
+            lblSplitTitle: "Visual Idle Time Splitter",
+            lblSplitSub: "💡 Drag body to move. Drag left/right handle ║ to resize with automatic pushing. Boundary times are displayed on the bottom axis.",
+            btnAddSegment: "+ Add new timeline segment",
+            btnCancelSplit: "Cancel",
+            btnSaveSplit: "Save segments"
         }
     };
 
@@ -1018,6 +903,10 @@
     }
 
     let selectedGaugeScore = 3;
+    let visualSegments = [];
+    let activeGapWindow = null;
+    let isUserEditingTimestamp = false;
+
     const checkTodayStr = getLocalDateString();
     if (!data.lastActiveDate) {
         data.lastActiveDate = checkTodayStr;
@@ -1037,8 +926,7 @@
     let pomoInterval = null;
     let isMacroBreak = false; 
 
-    // Forest view state
-    let forestViewMode = 'year'; // 'year' or 'all'
+    let forestViewMode = 'year'; 
     let forestActiveYear = new Date().getFullYear();
 
     const workerCode = `
@@ -1133,13 +1021,13 @@
         const t = dict[lang];
 
         const labelEl = document.getElementById('currentLangLabel');
-        if (labelEl) labelEl.textContent = isEn ? 'English' : 'Čeština';
+        if (labelEl) labelEl.textContent = isEn ? '🇬🇧 English' : '🇨🇿 Čeština';
 
         const storageEl = document.getElementById('storageIndicatorText');
         if (storageEl) storageEl.textContent = isEn ? '💾 Auto-saving to browser local storage (localStorage)' : '💾 Ukládání aktivní v paměti prohlížeče (localStorage)';
 
         document.getElementById('pomoTaskInput').placeholder = isEn ? 'Task description...' : 'Popis práce...';
-        document.getElementById('workTaskInput').placeholder = isEn ? 'e.g. Research, writing...' : 'Např. Rešerše, psaní...';
+        document.getElementById('workTaskInput').placeholder = isEn ? 'Optional description (e.g. Research...)' : 'Nepovinný popis (např. Rešerše...)';
         document.getElementById('workTimeInput').placeholder = isEn ? 'Duration' : 'Délka';
         document.getElementById('breakDurationInput').placeholder = isEn ? 'e.g. 15' : 'Např. 15';
         document.getElementById('breakNoteInput').placeholder = isEn ? 'Optional details...' : 'Nepovinné upřesnění...';
@@ -1706,20 +1594,27 @@
         const project = document.getElementById('workProjectSelect').value;
         const durationInput = parseFloat(document.getElementById('workTimeInput').value);
         const unit = document.getElementById('workUnitSelect').value;
-        const task = document.getElementById('workTaskInput').value.trim();
+        const taskRaw = document.getElementById('workTaskInput').value.trim();
         const customTimestamp = document.getElementById('workTimestampInput').value; 
 
+        const isEn = data.lang === 'en';
+        const task = taskRaw || (isEn ? 'Work session' : 'Práce na projektu');
         const minutes = unit === 'h' ? durationInput * 60 : durationInput;
         const parsedDate = new Date(customTimestamp);
 
         data.logs.push({
-            id: Date.now(), timestamp: new Date(parsedDate).toISOString(), date: getLocalDateString(parsedDate),
-            project: project, task: task, duration: minutes
+            id: Date.now(),
+            timestamp: new Date(parsedDate).toISOString(),
+            date: getLocalDateString(parsedDate),
+            project: project,
+            task: task,
+            duration: minutes
         });
 
         document.getElementById('workTimeInput').value = '';
         document.getElementById('workTaskInput').value = '';
-        initTimestampInput();
+        isUserEditingTimestamp = false;
+        initTimestampInput(true);
         saveData();
     }
 
@@ -1730,8 +1625,13 @@
         const note = document.getElementById('breakNoteInput').value.trim();
 
         data.breaks.push({
-            id: Date.now(), timestamp: new Date().toISOString(), date: getLocalDateString(),
-            category: category, note: note || (data.lang === 'en' ? 'Manual break entry' : 'Manuálně zadaná pauza'), duration: duration, type: 'manual'
+            id: Date.now(),
+            timestamp: new Date().toISOString(),
+            date: getLocalDateString(),
+            category: category,
+            note: note || (data.lang === 'en' ? 'Manual break entry' : 'Manuálně zadaná pauza'),
+            duration: duration,
+            type: 'manual'
         });
 
         document.getElementById('breakDurationInput').value = '';
@@ -1789,100 +1689,106 @@
         data.dailyGoal = parseFloat(document.getElementById('dailyGoalInput').value) || 2; saveData();
     }
 
-    function initTimestampInput() {
-        const now = new Date(); now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('workTimestampInput').value = now.toISOString().slice(0, 16);
+    function initTimestampInput(force = false) {
+        const input = document.getElementById('workTimestampInput');
+        if (!input) return;
+
+        if (!isUserEditingTimestamp || force) {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            input.value = now.toISOString().slice(0, 16);
+        }
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const timeInput = document.getElementById('workTimestampInput');
+        if (timeInput) {
+            ['focus', 'input', 'change', 'keydown'].forEach(evt => {
+                timeInput.addEventListener(evt, () => { isUserEditingTimestamp = true; });
+            });
+        }
+        setInterval(() => initTimestampInput(false), 60000);
+    });
 
     function moveMonth(dir) { currentCalendarDate.setMonth(currentCalendarDate.getMonth() + dir); renderCalendar(); }
 
-    // --- HIGH-DETAIL VECTOR PLANT & TREE GENERATOR ---
+    /* VYLAĎENÁ S DROBNOU SAZENIČKOU BEZ KVĚTU A VE SPRÁVNÉM MĚŘÍTKU */
     function getCustomPlantSVG(hours) {
         if (hours < 2) {
-            // 1. Sazenice / Malá vyklíčená rostlinka v hlíně (detailní květináč/hrouda)
+            // Malinká, drobná sazenička bez květu (v poměru k mohutnému stromu cca 1/3)
             return `
-            <svg class="iso-tree-svg" viewBox="0 0 50 60">
-                <ellipse cx="25" cy="52" rx="14" ry="5" fill="#3d2312" opacity="0.8" />
-                <path d="M 18 50 Q 25 44 32 50 L 29 42 L 21 42 Z" fill="#654321" />
-                <path d="M 25 43 Q 24 30 26 22" stroke="#365314" stroke-width="2.5" stroke-linecap="round" fill="none" />
-                <!-- Detailní lístky -->
-                <path d="M 25 32 C 16 28, 12 18, 22 24 C 24 25, 25 28, 25 32 Z" fill="#84cc16" stroke="#3f6212" stroke-width="0.8" />
-                <path d="M 26 27 C 34 23, 38 13, 28 19 C 26 20, 26 24, 26 27 Z" fill="#a3e635" stroke="#3f6212" stroke-width="0.8" />
-                <circle cx="25" cy="20" r="2.5" fill="#ec4899" />
+            <svg class="iso-tree-svg" viewBox="0 0 50 70">
+                <ellipse cx="25" cy="64" rx="8" ry="3" fill="#120904" opacity="0.55" />
+                <!-- Nízký tenký proutek -->
+                <path d="M 25 64 Q 24.5 54 25 44" stroke="#4a2c11" stroke-width="2" stroke-linecap="round" fill="none" />
+                <path d="M 25 64 Q 24.5 54 25 44" stroke="#78471a" stroke-width="0.9" stroke-linecap="round" fill="none" />
+                
+                <!-- Dva drobnoučké zelené lístky u temene proutku -->
+                <path d="M 25 48 Q 16 45 15 38 C 21 38 24 43 25 48 Z" fill="#84cc16" stroke="#3f6212" stroke-width="0.6" />
+                <path d="M 25 46 Q 34 43 35 36 C 29 36 26 41 25 46 Z" fill="#a3e635" stroke="#3f6212" stroke-width="0.6" />
+                
+                <!-- Drobné svěží srdíčko / výhonek uprostřed -->
+                <circle cx="25" cy="43" r="2" fill="#4ade80" />
             </svg>`;
         } else if (hours < 10) {
-            // 2. Propracovaný listnatý strom s texturou kmene a více vrstvami koruny
             return `
-            <svg class="iso-tree-svg" viewBox="0 0 50 65">
-                <ellipse cx="25" cy="58" rx="13" ry="5" fill="#2d170b" opacity="0.6" />
-                <!-- Kmen s texturou -->
-                <path d="M 22 58 L 22 35 Q 22 30 25 26 Q 28 30 28 35 L 28 58 Z" fill="#5c3a21" />
-                <path d="M 24 50 L 24 35" stroke="#3d2312" stroke-width="1.2" stroke-dasharray="2,2" />
-                <!-- Bohatá koruna - vrstvená -->
-                <circle cx="25" cy="24" r="16" fill="#4ade80" />
-                <circle cx="17" cy="22" r="11" fill="#22c55e" />
-                <circle cx="33" cy="21" r="11" fill="#16a34a" />
-                <circle cx="25" cy="15" r="10" fill="#86efac" />
-                <!-- Světelné odlesky -->
-                <circle cx="21" cy="18" r="4" fill="#bbf7d0" opacity="0.6" />
-                <circle cx="30" cy="16" r="3" fill="#bbf7d0" opacity="0.4" />
+            <svg class="iso-tree-svg" viewBox="0 0 50 70">
+                <ellipse cx="25" cy="62" rx="15" ry="5" fill="#120904" opacity="0.6" />
+                <path d="M 22 62 L 28 62 L 26 35 L 24 35 Z" fill="#422a1d" />
+                <circle cx="25" cy="28" r="16" fill="#16a34a" />
+                <circle cx="17" cy="26" r="11" fill="#22c55e" />
+                <circle cx="33" cy="25" r="11" fill="#15803d" />
+                <circle cx="25" cy="18" r="10" fill="#4ade80" />
+                <circle cx="21" cy="20" r="4" fill="#bbf7d0" opacity="0.8" />
             </svg>`;
         } else if (hours < 25) {
-            // 3. Detailní jehličnan / Vysoký smrk s patry
             return `
-            <svg class="iso-tree-svg" viewBox="0 0 50 70">
-                <ellipse cx="25" cy="62" rx="12" ry="4" fill="#2d170b" opacity="0.6" />
-                <rect x="23" y="44" width="4" height="18" rx="1" fill="#422a1d" />
-                <!-- Vrstvené větve jehličnanu -->
-                <polygon points="25,8 41,32 32,32 44,48 6,48 18,32 9,32" fill="#15803d" stroke="#052e16" stroke-width="0.8" />
-                <polygon points="25,18 37,36 30,36 39,52 11,52 20,36 13,36" fill="#16a34a" opacity="0.85" />
-                <polygon points="25,8 37,32 25,28" fill="#4ade80" opacity="0.35" />
+            <svg class="iso-tree-svg" viewBox="0 0 50 75">
+                <ellipse cx="25" cy="67" rx="14" ry="5" fill="#120904" opacity="0.6" />
+                <rect x="23" y="45" width="4" height="22" rx="1" fill="#3a2215" />
+                <polygon points="25,8 42,32 33,32 45,48 5,48 17,32 8,32" fill="#15803d" stroke="#052e16" stroke-width="0.8" />
+                <polygon points="25,18 38,36 31,36 40,52 10,52 19,36 12,36" fill="#16a34a" opacity="0.85" />
+                <polygon points="25,8 38,32 25,28" fill="#86efac" opacity="0.45" />
             </svg>`;
         } else if (hours < 50) {
-            // 4. Kvetoucí třešeň / Sakura s větvenou korunou a květy
             return `
-            <svg class="iso-tree-svg" viewBox="0 0 50 70">
-                <ellipse cx="25" cy="62" rx="14" ry="5" fill="#2d170b" opacity="0.6" />
-                <!-- Detailní rozvětvený kmen -->
-                <path d="M 21 62 L 23 40 Q 20 30 14 24 M 23 40 Q 28 32 35 25 M 23 40 L 26 22" stroke="#422a1d" stroke-width="3.5" stroke-linecap="round" fill="none" />
-                <!-- Koruna z květů -->
-                <circle cx="25" cy="20" r="17" fill="#f472b6" />
-                <circle cx="15" cy="22" r="11" fill="#f43f5e" />
-                <circle cx="35" cy="20" r="12" fill="#fb7185" />
-                <circle cx="25" cy="11" r="10" fill="#fbcfe8" />
-                <!-- Detaily květů / tečky -->
-                <circle cx="21" cy="16" r="2" fill="#ffffff" opacity="0.8" />
-                <circle cx="30" cy="15" r="2" fill="#ffffff" opacity="0.8" />
-                <circle cx="25" cy="24" r="2" fill="#ffffff" opacity="0.8" />
-                <circle cx="14" cy="24" r="1.5" fill="#ffffff" opacity="0.8" />
-                <circle cx="33" cy="23" r="1.5" fill="#ffffff" opacity="0.8" />
+            <svg class="iso-tree-svg" viewBox="0 0 50 75">
+                <ellipse cx="25" cy="67" rx="15" ry="5" fill="#120904" opacity="0.6" />
+                <path d="M 21 67 L 29 67 L 26 42 Q 22 30 14 24 M 26 42 Q 30 32 36 25" stroke="#3a2215" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                <circle cx="25" cy="22" r="17" fill="#f472b6" />
+                <circle cx="14" cy="24" r="11" fill="#f43f5e" />
+                <circle cx="36" cy="22" r="12" fill="#fb7185" />
+                <circle cx="25" cy="12" r="10" fill="#fbcfe8" />
+                <circle cx="21" cy="17" r="2.5" fill="#ffffff" opacity="0.9" />
+                <circle cx="31" cy="16" r="2.5" fill="#ffffff" opacity="0.9" />
             </svg>`;
         } else {
-            // 5. Prastorý obří lesní strom s mohutnými kořeny a detailní korunou
             return `
-            <svg class="iso-tree-svg" viewBox="0 0 55 75">
-                <ellipse cx="27.5" cy="67" rx="18" ry="6" fill="#1e0e06" opacity="0.7" />
-                <path d="M 20 67 C 20 50, 23 42, 23 35 L 32 35 C 32 42, 35 50, 35 67 Z" fill="#3b2219" />
-                <path d="M 23 58 C 17 62, 12 65, 10 66" stroke="#3b2219" stroke-width="4" stroke-linecap="round" fill="none" />
-                <path d="M 32 58 C 38 62, 43 65, 45 66" stroke="#3b2219" stroke-width="4" stroke-linecap="round" fill="none" />
-                <!-- Obří koruna -->
-                <circle cx="27.5" cy="25" r="22" fill="#14532d" />
-                <circle cx="15" cy="27" r="15" fill="#166534" />
-                <circle cx="40" cy="25" r="15" fill="#15803d" />
-                <circle cx="27.5" cy="12" r="14" fill="#22c55e" />
-                <circle cx="22" cy="18" r="7" fill="#4ade80" opacity="0.7" />
-                <circle cx="34" cy="17" r="7" fill="#4ade80" opacity="0.7" />
+            <svg class="iso-tree-svg" viewBox="0 0 55 80">
+                <ellipse cx="27.5" cy="72" rx="18" ry="6" fill="#0d0502" opacity="0.75" />
+                <path d="M 20 72 C 20 52, 23 42, 23 35 L 32 35 C 32 42, 35 52, 35 72 Z" fill="#2d180f" />
+                <circle cx="27.5" cy="26" r="23" fill="#14532d" />
+                <circle cx="14" cy="28" r="16" fill="#166534" />
+                <circle cx="41" cy="26" r="16" fill="#15803d" />
+                <circle cx="27.5" cy="12" r="15" fill="#22c55e" />
+                <circle cx="21" cy="18" r="7" fill="#86efac" opacity="0.6" />
             </svg>`;
         }
     }
 
+    function generatePseudoRandomIndex(seedStr, maxIndex) {
+        let hash = 0;
+        for (let i = 0; i < seedStr.length; i++) {
+            hash = seedStr.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return Math.abs(hash) % maxIndex;
+    }
+
     function renderForestIsometric() {
         const gridContainer = document.getElementById('isoGrassGrid');
-        const treesContainer = document.getElementById('isoTreesLayer');
-        if (!gridContainer || !treesContainer) return;
+        if (!gridContainer) return;
         
         gridContainer.innerHTML = '';
-        treesContainer.innerHTML = '';
 
         document.getElementById('forestYearDisplay').textContent = forestActiveYear;
 
@@ -1897,51 +1803,495 @@
         let totalMinsAll = 0;
         filteredProjects.forEach(p => { totalMinsAll += p.totalMinutes; });
 
-        const tileSlots = Array(25).fill(null);
-        const scatteredIndices = [12, 6, 18, 8, 16, 2, 22, 10, 14, 0, 24, 4, 20, 7, 17, 1, 23, 11, 13, 3, 21, 5, 19, 9, 15];
-
-        filteredProjects.forEach((tree, idx) => {
-            if (idx < 25) {
-                const slotIndex = scatteredIndices[idx];
-                tileSlots[slotIndex] = tree;
-            }
-        });
-
+        // Vytvoření 25 dlaždic (mřížka 5x5) s korektním vrstvením
+        const tiles = [];
         for (let i = 0; i < 25; i++) {
             const tile = document.createElement('div');
             tile.className = 'iso-tile';
+
+            const row = Math.floor(i / 5);
+            const col = i % 5;
+            tile.style.zIndex = (row + col) * 10;
+
             gridContainer.appendChild(tile);
+            tiles.push(tile);
         }
 
-        tileSlots.forEach((tree) => {
-            const cell = document.createElement('div');
-            cell.className = 'iso-tree-cell';
+        const occupiedIndices = new Set();
 
-            if (tree) {
-                const hours = tree.totalMinutes / 60;
-                let treeTypeName = data.lang === 'en' ? 'Sapling' : 'Mladá sazenice';
+        filteredProjects.forEach((tree) => {
+            if (occupiedIndices.size >= 25) return;
 
-                if (hours >= 50) treeTypeName = data.lang === 'en' ? 'Ancient Giant Tree' : 'Prastarý obr';
-                else if (hours >= 25) treeTypeName = data.lang === 'en' ? 'Blooming Tree' : 'Kvetoucí strom';
-                else if (hours >= 10) treeTypeName = data.lang === 'en' ? 'Pine Tree' : 'Vysoký smrk';
-                else if (hours >= 2) treeTypeName = data.lang === 'en' ? 'Deciduous Tree' : 'Listnatý strom';
-
-                const totalTimeStr = hours >= 1 ? `${hours.toFixed(1)} ${data.lang === 'en' ? 'hours' : 'hodin'}` : `${tree.totalMinutes} ${data.lang === 'en' ? 'minutes' : 'minut'}`;
-                const tooltipText = `Projekt: ${tree.name}\nTyp: ${treeTypeName}\nČas: ${totalTimeStr}\nDokončeno: ${tree.completedDate}`;
-
-                const treeObj = document.createElement('div');
-                treeObj.className = 'iso-tree-object';
-                treeObj.title = tooltipText;
-                treeObj.innerHTML = getCustomPlantSVG(hours);
-
-                cell.appendChild(treeObj);
+            let targetIndex = generatePseudoRandomIndex(tree.name + (tree.id || ''), 25);
+            while (occupiedIndices.has(targetIndex)) {
+                targetIndex = (targetIndex + 1) % 25;
             }
+            occupiedIndices.add(targetIndex);
 
-            treesContainer.appendChild(cell);
+            const tile = tiles[targetIndex];
+            const hours = tree.totalMinutes / 60;
+
+            let treeTypeName = data.lang === 'en' ? 'Sapling' : 'Mladá sazenice';
+            if (hours >= 50) treeTypeName = data.lang === 'en' ? 'Ancient Giant Tree' : 'Prastarý obr';
+            else if (hours >= 25) treeTypeName = data.lang === 'en' ? 'Blooming Tree' : 'Kvetoucí strom';
+            else if (hours >= 10) treeTypeName = data.lang === 'en' ? 'Pine Tree' : 'Vysoký smrk';
+            else if (hours >= 2) treeTypeName = data.lang === 'en' ? 'Deciduous Tree' : 'Listnatý strom';
+
+            const totalTimeStr = hours >= 1 ? `${hours.toFixed(1)} ${data.lang === 'en' ? 'hours' : 'hodin'}` : `${tree.totalMinutes} ${data.lang === 'en' ? 'minutes' : 'minut'}`;
+            const tooltipText = `Projekt: ${tree.name}\nTyp: ${treeTypeName}\nČas: ${totalTimeStr}\nDokončeno: ${tree.completedDate}`;
+
+            const treeObj = document.createElement('div');
+            treeObj.className = 'iso-tree-object';
+            treeObj.title = tooltipText;
+            treeObj.innerHTML = getCustomPlantSVG(hours);
+
+            tile.appendChild(treeObj);
         });
 
         document.getElementById('forestTotalMinutes').textContent = `${totalMinsAll} mins`;
         document.getElementById('forestCountAlive').textContent = `${filteredProjects.length} 🌳`;
+    }
+
+    /* TIMELINE SPLITTER S ČASEM ZOBRAZENÝM V DOLNÍ LIŠTĚ NA POZICI HRANICE BLOKŮ */
+    function openSplitModal(startStr, endStr) {
+        const todayStr = getLocalDateString();
+        const startMs = new Date(`${todayStr}T${startStr}:00`).getTime();
+        const endMs = new Date(`${todayStr}T${endStr}:00`).getTime();
+
+        activeGapWindow = { startStr, endStr, startMs, endMs, totalMs: endMs - startMs };
+        visualSegments = [];
+
+        document.getElementById('splitModalOverlay').classList.add('active');
+        renderVisualTimeline();
+    }
+
+    function closeModal() { 
+        document.getElementById('splitModalOverlay').classList.remove('active'); 
+    }
+
+    function handleTimelineTrackClick(e) {
+        if (e.target.classList.contains('timeline-segment-block') || e.target.classList.contains('resize-handle')) {
+            return;
+        }
+
+        const track = document.getElementById('splitTimelineTrack');
+        const rect = track.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickPct = (clickX / rect.width) * 100;
+
+        const segDurationMins = 15;
+        const totalMins = activeGapWindow.totalMs / 60000;
+        let widthPct = Math.min(30, (segDurationMins / totalMins) * 100);
+
+        let startPct = clickPct - (widthPct / 2);
+        if (startPct < 0) startPct = 0;
+        if (startPct + widthPct > 100) startPct = 100 - widthPct;
+
+        const defaultTarget = `proj:${data.projects[0] || 'Ostatní'}`;
+        const randomColor = segmentColorsPalette[visualSegments.length % segmentColorsPalette.length];
+
+        visualSegments.push({
+            id: Date.now() + Math.random(),
+            startPct: startPct,
+            widthPct: widthPct,
+            target: defaultTarget,
+            color: randomColor
+        });
+
+        sortAndClampSegments();
+        renderVisualTimeline();
+    }
+
+    function addNewVisualSegment() {
+        if (!activeGapWindow) return;
+        const totalMins = activeGapWindow.totalMs / 60000;
+        const segDurationMins = Math.min(15, Math.max(5, Math.floor(totalMins / 3)));
+
+        let lastEndPct = 0;
+        if (visualSegments.length > 0) {
+            lastEndPct = visualSegments[visualSegments.length - 1].startPct + visualSegments[visualSegments.length - 1].widthPct;
+        }
+
+        let widthPct = (segDurationMins / totalMins) * 100;
+        if (lastEndPct + widthPct > 100) lastEndPct = Math.max(0, 100 - widthPct);
+
+        const defaultTarget = `proj:${data.projects[0] || 'Ostatní'}`;
+        const randomColor = segmentColorsPalette[visualSegments.length % segmentColorsPalette.length];
+
+        visualSegments.push({
+            id: Date.now() + Math.random(),
+            startPct: lastEndPct,
+            widthPct: widthPct,
+            target: defaultTarget,
+            color: randomColor
+        });
+
+        sortAndClampSegments();
+        renderVisualTimeline();
+    }
+
+    function sortAndClampSegments() {
+        visualSegments.sort((a,b) => a.startPct - b.startPct);
+    }
+
+    function getFormattedTimeFromPct(pct) {
+        if (!activeGapWindow) return "00:00";
+        const timeMs = activeGapWindow.startMs + (pct / 100) * activeGapWindow.totalMs;
+        const d = new Date(timeMs);
+        return d.toTimeString().slice(0, 5);
+    }
+
+    function renderVisualTimeline() {
+        const track = document.getElementById('splitTimelineTrack');
+        const bottomBar = document.getElementById('timelineBottomTimeBar');
+        const listContainer = document.getElementById('visualSegmentsList');
+        if (!track || !listContainer || !bottomBar) return;
+
+        track.innerHTML = '';
+        bottomBar.innerHTML = '';
+        listContainer.innerHTML = '';
+
+        const isEn = data.lang === 'en';
+
+        // Vytvoření bloků na časové ose
+        visualSegments.forEach((seg, idx) => {
+            const block = document.createElement('div');
+            block.className = 'timeline-segment-block';
+            block.style.left = `${seg.startPct}%`;
+            block.style.width = `${seg.widthPct}%`;
+            block.style.backgroundColor = seg.color || '#3182ce';
+
+            const handleLeft = document.createElement('div');
+            handleLeft.className = 'resize-handle';
+            handleLeft.textContent = '║';
+            block.appendChild(handleLeft);
+
+            let labelText = "Úsek " + (idx + 1);
+            if (seg.target.startsWith('proj:')) labelText = seg.target.replace('proj:', '');
+            else if (seg.target.startsWith('break:')) labelText = getCategoryName(seg.target.replace('break:', ''));
+
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'segment-label-text';
+            labelSpan.textContent = labelText;
+            block.appendChild(labelSpan);
+
+            const handleRight = document.createElement('div');
+            handleRight.className = 'resize-handle';
+            handleRight.textContent = '║';
+            block.appendChild(handleRight);
+
+            let isDragging = false;
+            let isResizingLeft = false;
+            let isResizingRight = false;
+            let startX = 0;
+            let startLeftPct = 0;
+            let startWidthPct = 0;
+
+            block.addEventListener('mousedown', (e) => {
+                if (e.target === handleLeft || e.target === handleRight) return;
+                isDragging = true;
+                startX = e.clientX;
+                startLeftPct = seg.startPct;
+                e.stopPropagation();
+            });
+
+            handleLeft.addEventListener('mousedown', (e) => {
+                isResizingLeft = true;
+                startX = e.clientX;
+                startLeftPct = seg.startPct;
+                startWidthPct = seg.widthPct;
+                e.stopPropagation();
+            });
+
+            handleRight.addEventListener('mousedown', (e) => {
+                isResizingRight = true;
+                startX = e.clientX;
+                startWidthPct = seg.widthPct;
+                e.stopPropagation();
+            });
+
+            const onMouseMove = (e) => {
+                const trackWidth = track.clientWidth;
+                const deltaPct = ((e.clientX - startX) / trackWidth) * 100;
+
+                if (isDragging) {
+                    let newStart = startLeftPct + deltaPct;
+                    let newEnd = newStart + seg.widthPct;
+
+                    if (deltaPct > 0) { // Posun doprava
+                        for (let i = idx + 1; i < visualSegments.length; i++) {
+                            let next = visualSegments[i];
+                            if (newEnd > next.startPct) {
+                                let pushAmount = newEnd - next.startPct;
+                                next.startPct += pushAmount;
+                                next.widthPct -= pushAmount;
+                                if (next.widthPct < 2) {
+                                    next.widthPct = 2;
+                                    newEnd = next.startPct;
+                                    newStart = newEnd - seg.widthPct;
+                                }
+                            }
+                        }
+                        if (newEnd > 100) {
+                            newEnd = 100;
+                            newStart = 100 - seg.widthPct;
+                        }
+                    } else { // Posun doleva
+                        for (let i = idx - 1; i >= 0; i--) {
+                            let prev = visualSegments[i];
+                            let prevEnd = prev.startPct + prev.widthPct;
+                            if (newStart < prevEnd) {
+                                let pushAmount = prevEnd - newStart;
+                                prev.widthPct -= pushAmount;
+                                if (prev.widthPct < 2) {
+                                    prev.widthPct = 2;
+                                    newStart = prev.startPct + 2;
+                                }
+                            }
+                        }
+                        if (newStart < 0) newStart = 0;
+                    }
+
+                    seg.startPct = newStart;
+                    renderVisualTimelineUIOnly();
+                } 
+                else if (isResizingLeft) {
+                    let newStart = startLeftPct + deltaPct;
+                    let newWidth = (startLeftPct + startWidthPct) - newStart;
+
+                    if (deltaPct < 0) { // Roztahování doleva
+                        for (let i = idx - 1; i >= 0; i--) {
+                            let prev = visualSegments[i];
+                            let prevEnd = prev.startPct + prev.widthPct;
+                            if (newStart < prevEnd) {
+                                let pushAmount = prevEnd - newStart;
+                                prev.widthPct -= pushAmount;
+                                if (prev.widthPct < 2) {
+                                    prev.widthPct = 2;
+                                    newStart = prev.startPct + 2;
+                                    newWidth = (startLeftPct + startWidthPct) - newStart;
+                                }
+                            }
+                        }
+                        if (newStart < 0) {
+                            newStart = 0;
+                            newWidth = startLeftPct + startWidthPct;
+                        }
+                    } else { // Zkracování zleva
+                        if (newWidth < 2) {
+                            newWidth = 2;
+                            newStart = (startLeftPct + startWidthPct) - 2;
+                        }
+                    }
+
+                    seg.startPct = newStart;
+                    seg.widthPct = newWidth;
+                    renderVisualTimelineUIOnly();
+                } 
+                else if (isResizingRight) {
+                    let newWidth = startWidthPct + deltaPct;
+                    let newEnd = seg.startPct + newWidth;
+
+                    if (deltaPct > 0) { // Roztahování doprava
+                        for (let i = idx + 1; i < visualSegments.length; i++) {
+                            let next = visualSegments[i];
+                            if (newEnd > next.startPct) {
+                                let pushAmount = newEnd - next.startPct;
+                                next.startPct += pushAmount;
+                                next.widthPct -= pushAmount;
+                                if (next.widthPct < 2) {
+                                    next.widthPct = 2;
+                                    newEnd = next.startPct;
+                                    newWidth = newEnd - seg.startPct;
+                                }
+                            }
+                        }
+                        if (newEnd > 100) {
+                            newEnd = 100;
+                            newWidth = 100 - seg.startPct;
+                        }
+                    } else { // Zkracování zprava
+                        if (newWidth < 2) newWidth = 2;
+                    }
+
+                    seg.widthPct = newWidth;
+                    renderVisualTimelineUIOnly();
+                }
+            };
+
+            const onMouseUp = () => {
+                if (isDragging || isResizingLeft || isResizingRight) {
+                    isDragging = false;
+                    isResizingLeft = false;
+                    isResizingRight = false;
+                    window.removeEventListener('mousemove', onMouseMove);
+                    window.removeEventListener('mouseup', onMouseUp);
+                    sortAndClampSegments();
+                    renderVisualTimeline();
+                }
+            };
+
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onMouseUp);
+
+            track.appendChild(block);
+
+            // Záznam do tabulky pod grafem
+            const row = document.createElement('div');
+            row.style.display = 'grid';
+            row.style.gridTemplateColumns = 'auto 1fr 1fr auto';
+            row.style.gap = '8px';
+            row.style.marginBottom = '8px';
+            row.style.alignItems = 'center';
+
+            let projOptionsHtml = data.projects.map(p => `<option value="proj:${p}" ${seg.target === `proj:${p}` ? 'selected' : ''}>${isEn ? 'Work:' : 'Práce:'} ${p}</option>`).join('');
+            let breakOptionsHtml = Object.keys(data.breakCategories)
+                .filter(k => k !== 'auto')
+                .map(k => `<option value="break:${k}" ${seg.target === `break:${k}` ? 'selected' : ''}>${isEn ? 'Break:' : 'Pauza:'} ${getCategoryName(k)}</option>`).join('');
+
+            const { tStart, tEnd } = getSegmentTimes(seg);
+
+            row.innerHTML = `
+                <div style="width:14px; height:14px; border-radius:50%; background:${seg.color};"></div>
+                <select onchange="updateVisualSegTarget(${idx}, this.value)">${projOptionsHtml}${breakOptionsHtml}</select>
+                <span id="segTimeLabel_${idx}" style="font-size:0.8rem; font-weight:bold; color:#3b82f6;">${tStart} - ${tEnd}</span>
+                <button type="button" class="btn-danger" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="removeVisualSegment(${idx})">X</button>
+            `;
+            listContainer.appendChild(row);
+        });
+
+        renderBottomTimeBar();
+    }
+
+    /* Vykreslení spodní časové osy s časem na pomezí rozhraní bloků */
+    function renderBottomTimeBar() {
+        const bottomBar = document.getElementById('timelineBottomTimeBar');
+        if (!bottomBar || !activeGapWindow) return;
+        bottomBar.innerHTML = '';
+
+        // Základní počáteční a koncový čas
+        const startMark = document.createElement('div');
+        startMark.className = 'bottom-time-mark';
+        startMark.style.left = '0%';
+        startMark.textContent = activeGapWindow.startStr;
+        bottomBar.appendChild(startMark);
+
+        const endMark = document.createElement('div');
+        endMark.className = 'bottom-time-mark';
+        endMark.style.left = '100%';
+        endMark.textContent = activeGapWindow.endStr;
+        bottomBar.appendChild(endMark);
+
+        // Časy přímo na rozhraní/pomezí mezi sousedícími bloky
+        visualSegments.forEach((seg, idx) => {
+            if (idx < visualSegments.length - 1) {
+                const boundaryPct = seg.startPct + seg.widthPct;
+                const boundaryTimeStr = getFormattedTimeFromPct(boundaryPct);
+
+                const mark = document.createElement('div');
+                mark.className = 'bottom-time-mark';
+                mark.id = `bottomBoundaryMark_${idx}`;
+                mark.style.left = `${boundaryPct}%`;
+                mark.style.color = '#2563eb';
+                mark.textContent = boundaryTimeStr;
+
+                bottomBar.appendChild(mark);
+            }
+        });
+    }
+
+    function renderVisualTimelineUIOnly() {
+        const blocks = document.querySelectorAll('.timeline-segment-block');
+        visualSegments.forEach((seg, i) => {
+            if (blocks[i]) {
+                blocks[i].style.left = `${seg.startPct}%`;
+                blocks[i].style.width = `${seg.widthPct}%`;
+            }
+            updateVisualSegmentRowTimes(seg, i);
+
+            // Aktualizace času dole na pomezí rozhraní
+            const mark = document.getElementById(`bottomBoundaryMark_${i}`);
+            if (mark) {
+                const boundaryPct = seg.startPct + seg.widthPct;
+                mark.style.left = `${boundaryPct}%`;
+                mark.textContent = getFormattedTimeFromPct(boundaryPct);
+            }
+        });
+    }
+
+    function updateVisualSegTarget(idx, val) {
+        if (visualSegments[idx]) {
+            visualSegments[idx].target = val;
+            renderVisualTimeline();
+        }
+    }
+
+    function removeVisualSegment(idx) {
+        visualSegments.splice(idx, 1);
+        renderVisualTimeline();
+    }
+
+    function getSegmentTimes(seg) {
+        if (!activeGapWindow) return { tStart: '00:00', tEnd: '00:00' };
+        const segStartMs = activeGapWindow.startMs + (seg.startPct / 100) * activeGapWindow.totalMs;
+        const segEndMs = segStartMs + (seg.widthPct / 100) * activeGapWindow.totalMs;
+
+        const dStart = new Date(segStartMs);
+        const dEnd = new Date(segEndMs);
+
+        return {
+            tStart: dStart.toTimeString().slice(0, 5),
+            tEnd: dEnd.toTimeString().slice(0, 5),
+            durationMins: Math.max(1, Math.round((segEndMs - segStartMs) / 60000))
+        };
+    }
+
+    function updateVisualSegmentRowTimes(seg, idx) {
+        const label = document.getElementById(`segTimeLabel_${idx}`);
+        if (label) {
+            const { tStart, tEnd } = getSegmentTimes(seg);
+            label.textContent = `${tStart} - ${tEnd}`;
+        }
+    }
+
+    function saveVisualSplitSegments() {
+        if (!activeGapWindow || visualSegments.length === 0) { closeModal(); return; }
+
+        const todayStr = getLocalDateString();
+        const isEn = data.lang === 'en';
+
+        visualSegments.forEach(seg => {
+            const { tStart, tEnd, durationMins } = getSegmentTimes(seg);
+            const eDate = new Date(`${todayStr}T${tEnd}:00`);
+
+            if (durationMins > 0) {
+                if (seg.target.startsWith('proj:')) {
+                    const projName = seg.target.replace('proj:', '');
+                    data.logs.push({
+                        id: Date.now() + Math.random(),
+                        timestamp: eDate.toISOString(),
+                        date: todayStr,
+                        project: projName,
+                        task: isEn ? 'Graphically assigned from idle time' : 'Graficky přiřazeno z volného času',
+                        duration: durationMins
+                    });
+                } else if (seg.target.startsWith('break:')) {
+                    const catKey = seg.target.replace('break:', '');
+                    data.breaks.push({
+                        id: Date.now() + Math.random(),
+                        timestamp: eDate.toISOString(),
+                        date: todayStr,
+                        category: catKey,
+                        note: isEn ? 'Graphically assigned from idle time' : 'Graficky přiřazeno z volného času',
+                        duration: durationMins,
+                        type: 'manual'
+                    });
+                }
+            }
+        });
+
+        closeModal();
+        saveData();
     }
 
     function renderCalendar() {
@@ -2181,14 +2531,16 @@
             } else if (item.masterType === 'break') {
                 let color = data.breakCategories[item.raw.category] ? data.breakCategories[item.raw.category].color : 'var(--warning)';
                 let catName = getCategoryName(item.raw.category);
-                badgeHtml = `<span class="badge" style="background:${color}; color:#fff;">${item.raw.category.toUpperCase()}</span>`;
+                
+                let catNameClean = catName.replace(/[\u1F600-\u1F64F\u1F300-\u1F5FF\u1F680-\u1F6FF\u2600-\u26FF\u2700-\u27BF]/g, '').trim();
+                badgeHtml = `<span class="badge" style="background:${color}; color:#fff;">${catNameClean.toUpperCase()}</span>`;
                 catProj = catName; textDesc = item.raw.note;
                 actionHtml = `<button class="btn-danger" style="width:auto; padding:2px 6px; font-size:0.75rem;" onclick="deleteItem(${item.raw.id}, 'break')">X</button>`;
             } else {
                 let color = data.breakCategories['auto'] ? data.breakCategories['auto'].color : '#9ca3af';
                 badgeHtml = `<span class="badge" style="background:${color}; color:#fff;">AUTO-GAP</span>`;
                 catProj = getCategoryName('auto'); textDesc = item.raw.task;
-                actionHtml = `<span style="font-size:0.75rem; color:#718096;">-</span>`;
+                actionHtml = `<button onclick="openSplitModal('${tStart}', '${tEnd}')" style="width:auto; padding:2px 6px; font-size:0.75rem; background-color:var(--success); color:white;">${isEn ? 'Split' : 'Rozdělit'}</button>`;
             }
 
             tr.innerHTML = `<td>${intervalText}</td><td>${badgeHtml}</td><td><strong>${catProj}</strong></td><td>${textDesc}</td><td>${durStr}</td><td>${actionHtml}</td>`;
@@ -2281,12 +2633,14 @@
                 badgeHtml = getMoodBadgeHTML(parseFloat(moodVal));
             }
 
+            const completeLabel = isEn ? "🌳 Complete" : "🌳 Dokončit";
+
             tr.innerHTML = `
                 <td><strong>${p}</strong></td>
                 <td>${Math.floor(projTotals[p]/60)}h ${projTotals[p]%60}m</td>
                 <td>${badgeHtml} ${moodVal}</td>
                 <td>
-                    <button class="btn-success btn-sm" style="padding: 2px 6px; font-size: 0.75rem;" onclick="completeProject('${p}')">🌳 Dokončit</button>
+                    <button class="btn-success btn-sm" style="padding: 2px 6px; font-size: 0.75rem;" onclick="completeProject('${p}')">${completeLabel}</button>
                 </td>
             `;
             projTbody.appendChild(tr);
@@ -2341,7 +2695,7 @@
         });
     }
 
-    initTimestampInput();
+    initTimestampInput(true);
     renderAll();
 
     document.addEventListener('DOMContentLoaded', () => {
