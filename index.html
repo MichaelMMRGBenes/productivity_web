@@ -536,7 +536,7 @@
                 <div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                         <h3 id="chart3Title" style="margin:0;">Rozložení projektů</h3>
-                        <button class="btn-success btn-sm" onclick="toggleForestFlip()" id="btnFlipForest" style="padding: 2px 10px; font-size: 0.78rem; background: #38a169;">🌲 Forest App View</button>
+                        <button class="btn-success btn-sm" onclick="toggleForestFlip()" id="btnFlipForest" style="padding: 2px 10px; font-size: 0.78rem; background: #38a169;">Forest App View</button>
                     </div>
                     <div class="flip-card-container" id="projectFlipCard">
                         <div class="flip-card-inner">
@@ -768,7 +768,7 @@
             chart1Title: "Aktivita během dne",
             chart2Title: "Struktura přestávek",
             chart3Title: "Rozložení projektů",
-            btnFlipForest: "🌲 Forest App View",
+            btnFlipForest: "Forest App View",
             tabModeYear: "Rok",
             tabModeAll: "Celá doba",
             lblMoodHistoryTitle: "Historie pocitů a poznámek",
@@ -847,7 +847,7 @@
             chart1Title: "Daily Activity Pattern",
             chart2Title: "Break Structure",
             chart3Title: "Project Distribution",
-            btnFlipForest: "🌲 Forest App View",
+            btnFlipForest: "Forest App View",
             tabModeYear: "Year",
             tabModeAll: "All Time",
             lblMoodHistoryTitle: "Mood Notes & Reflection Log",
@@ -1021,7 +1021,7 @@
         const t = dict[lang];
 
         const labelEl = document.getElementById('currentLangLabel');
-        if (labelEl) labelEl.textContent = isEn ? '🇬🇧 English' : '🇨🇿 Čeština';
+        if (labelEl) labelEl.textContent = isEn ? 'English' : 'Čeština';
 
         const storageEl = document.getElementById('storageIndicatorText');
         if (storageEl) storageEl.textContent = isEn ? '💾 Auto-saving to browser local storage (localStorage)' : '💾 Ukládání aktivní v paměti prohlížeče (localStorage)';
